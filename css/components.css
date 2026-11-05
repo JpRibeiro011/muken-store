@@ -273,6 +273,12 @@
   border-color: color-mix(in srgb, var(--c-warning) 30%, transparent);
 }
 
+.badge--warning {
+  color: var(--c-warning);
+  background: var(--c-warning-soft);
+  border-color: color-mix(in srgb, var(--c-warning) 30%, transparent);
+}
+
 .badge--out {
   color: var(--c-danger);
   background: var(--c-danger-soft);
@@ -361,10 +367,9 @@
 }
 
 .callout {
-  display: flex;
-  gap: 0.8rem;
-  align-items: flex-start;
-  padding: 0.9rem 1rem;
+  position: relative;
+  display: block;
+  padding: 0.9rem 1rem 0.9rem 2.85rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--c-border);
   background: var(--c-primary-soft);
@@ -374,7 +379,19 @@
 
 .callout .icon {
   color: var(--c-link);
-  margin-top: 1px;
+}
+
+.callout > .icon:first-child {
+  position: absolute;
+  left: 0.95rem;
+  top: 0.95rem;
+  width: 20px;
+  height: 20px;
+}
+
+.callout ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
 }
 
 .callout--warning {
@@ -2313,6 +2330,7 @@ body.has-toasts .back-to-top {
 
 /* ---------- Copiar código ---------- */
 .copy-field {
+  contain: inline-size; /* o texto longo não força a largura dos grids pais */
   display: flex;
   align-items: center;
   gap: 0.5rem;
