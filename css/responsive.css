@@ -631,3 +631,51 @@
     transform: translate(-50%, 0);
   }
 }
+
+/* =====================================================================
+   Carrinho
+   ===================================================================== */
+@media (max-width: 1100px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-layout .cart-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .cart-main__head {
+    display: none;
+  }
+
+  .cart-line {
+    grid-template-columns: 80px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "media info remove"
+      "media qty total"
+      "later later later";
+    gap: 0.5rem 0.85rem;
+  }
+
+  .cart-line__media {
+    width: 80px;
+    height: 80px;
+  }
+
+  .cart-line__qty {
+    justify-self: start;
+  }
+
+  .cart-main__foot {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 420px) {
+  .drawer__actions {
+    grid-template-columns: 1fr;
+  }
+}
