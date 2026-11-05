@@ -572,7 +572,13 @@
     },
 
     mount(root) {
-      if (MK.cart.isEmpty()) return null;
+      if (MK.cart.isEmpty()) {
+        // Se o carrinho for preenchido (ex.: em outra aba), exibe o checkout
+        const offEmpty = MK.utils.on('cart:change', () => {
+          if (!MK.cart.isEmpty()) MK.router.refresh();
+        });
+        return () => offEmpty();
+      }
       const state = this.state || initialState();
       const form = $('[data-checkout-form]', root);
       const summary = $('[data-checkout-summary]', root);
