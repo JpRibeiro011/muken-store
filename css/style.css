@@ -4202,3 +4202,46 @@ h1[tabindex="-1"]:focus {
 .data-table td {
   color: var(--c-text-2);
 }
+
+/* ---------- 29. Robustez de layout ---------- */
+/* Itens de grid não devem ser alargados pelo conteúdo (min-width:auto),
+   o que causaria rolagem horizontal em telas estreitas. */
+.product-page__grid > *,
+.bestsellers > *,
+.catalog__layout > *,
+.cart-layout > *,
+.checkout__layout > *,
+.success__grid > *,
+.contact-layout > *,
+.manifesto__inner > *,
+.about-story > *,
+.order-card__head > *,
+.order-card__grid > * {
+  min-width: 0;
+}
+
+.pay-result__head {
+  flex-wrap: wrap;
+}
+
+.pay-result__head .badge {
+  white-space: normal;
+}
+
+/* Contêineres em grid de uma coluna: a coluna implícita "auto" cresceria
+   até o tamanho mínimo do conteúdo; minmax(0, 1fr) mantém tudo na tela. */
+.product-info,
+.spotlight,
+.spotlight__body,
+.quick-view__info,
+.checkout-step,
+.cart-summary,
+.checkout__summary,
+.contact-form {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.spotlight__actions,
+.buy-price__row {
+  flex-wrap: wrap;
+}

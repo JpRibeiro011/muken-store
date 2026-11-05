@@ -2387,3 +2387,18 @@ body.has-toasts .back-to-top {
   font-size: 0.85em;
   color: var(--c-link);
 }
+
+.summary-block {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.switch > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.switch > span:first-child .icon {
+  color: var(--c-link);
+}

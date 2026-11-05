@@ -480,12 +480,15 @@
     return rows.join('');
   }
 
-  function summaryTotal(totals, { pixHint = true } = {}) {
+  function summaryTotal(totals) {
+    return `<div class="summary__total"><dt>Total</dt><dd data-cart-total>${formatPrice(totals.total)}</dd></div>`;
+  }
+
+  /** Texto auxiliar (fica FORA do <dl>, que só aceita pares dt/dd). */
+  function summaryHint(totals) {
     const pix = roundMoney((totals.subtotal - totals.couponDiscount) * 0.95 + totals.shipping);
     const inst = MK.products.installments(totals.total);
-    return `
-      <div class="summary__total"><dt>Total</dt><dd data-cart-total>${formatPrice(totals.total)}</dd></div>
-      ${pixHint ? `<p class="summary__hint">ou <strong>${formatPrice(pix)}</strong> no PIX · até ${inst.count}x de ${formatPrice(inst.value)} sem juros</p>` : ''}`;
+    return `<p class="summary__hint">ou <strong>${formatPrice(pix)}</strong> no PIX · até ${inst.count}x de ${formatPrice(inst.value)} sem juros</p>`;
   }
 
   /* ---------- Gaveta (mini carrinho) ---------- */
@@ -520,7 +523,10 @@
         <ul class="cart-lines cart-lines--drawer">${lines.map((l) => lineHTML(l, 'drawer')).join('')}</ul>
       </div>
       <div class="drawer__footer">
-        <dl class="summary summary--compact">${summaryRows(totals)}${summaryTotal(totals)}</dl>
+        <div class="summary-block">
+          <dl class="summary summary--compact">${summaryRows(totals)}${summaryTotal(totals)}</dl>
+          ${summaryHint(totals)}
+        </div>
         <div class="drawer__actions">
           <a class="btn btn--secondary" href="#/carrinho">Ver carrinho</a>
           <a class="btn btn--primary" href="#/checkout">Finalizar compra ${icon('arrow-right', 'btn__arrow')}</a>
@@ -610,7 +616,10 @@
           <aside class="cart-summary card card--pad" aria-labelledby="summary-title">
             <h2 class="h3" id="summary-title">Resumo do pedido</h2>
             ${freeShippingProgress(totals)}
-            <dl class="summary">${summaryRows(totals)}${summaryTotal(totals)}</dl>
+            <div class="summary-block">
+              <dl class="summary">${summaryRows(totals)}${summaryTotal(totals)}</dl>
+              ${summaryHint(totals)}
+            </div>
             ${couponBox(totals)}
             <a class="btn btn--primary btn--lg btn--block" href="#/checkout">${icon('lock')}Finalizar compra</a>
             <p class="secure-note">${icon('shield', 'icon--sm')}Ambiente de demonstração: nenhum pagamento real é processado.</p>

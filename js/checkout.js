@@ -407,10 +407,12 @@
           </li>`).join('')}
       </ul>
       <a class="btn btn--link small" href="#/carrinho">${icon('arrow-left', 'icon--xs')}Editar carrinho</a>
-      <dl class="summary">${rows.join('')}
-        <div class="summary__total"><dt>Total</dt><dd data-checkout-total>${formatPrice(totals.total)}</dd></div>
+      <div class="summary-block">
+        <dl class="summary">${rows.join('')}
+          <div class="summary__total"><dt>Total</dt><dd data-checkout-total>${formatPrice(totals.total)}</dd></div>
+        </dl>
         ${hint}
-      </dl>
+      </div>
       <p class="secure-note">${icon('lock', 'icon--sm')}Checkout demonstrativo · nenhuma cobrança real</p>`;
   }
 

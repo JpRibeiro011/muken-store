@@ -792,7 +792,7 @@
               <div class="product-stage media-loading" data-zoom>
                 <img src="${esc(product.image)}" alt="${esc(product.imageAlt)}" width="800" height="800">
                 <div class="product-card__badges">${MK.ui.badges(product)}</div>
-                <span class="product-stage__hint" aria-hidden="true">${icon('zoom', 'icon--sm')}Passe o mouse para ampliar</span>
+                <span class="product-stage__hint" aria-hidden="true">${icon('zoom', 'icon--sm')}Passe o mouse ou toque para ampliar</span>
               </div>
               <ul class="product-gallery__features" aria-label="Destaques do produto">
                 ${product.highlights.map((h) => `<li>${icon('check-circle', 'icon--sm')}${esc(h)}</li>`).join('')}
