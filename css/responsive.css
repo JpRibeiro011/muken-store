@@ -420,6 +420,7 @@
   }
 
   .quick-view__media {
+    min-height: 0;
     aspect-ratio: 16 / 10;
   }
 }
