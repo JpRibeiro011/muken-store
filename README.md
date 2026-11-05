@@ -38,6 +38,7 @@ desenvolvido com HTML5, CSS3 e JavaScript Vanilla usando a metodologia **Vibe Co
 - [Estrutura de pastas](#estrutura-de-pastas)
 - [Como executar localmente](#como-executar-localmente)
 - [Testes automatizados (opcional)](#testes-automatizados-opcional)
+- [Versionamento com Git](#versionamento-com-git)
 - [Publicação no GitHub Pages](#publicação-no-github-pages)
 - [Informações acadêmicas](#informações-acadêmicas)
 
@@ -200,6 +201,40 @@ npx playwright install chromium
 
 ```bash
 node tests/e2e.js
+```
+
+## Versionamento com Git
+
+Comandos usados para versionar e publicar o projeto (o histórico de commits do repositório segue as etapas do desenvolvimento):
+
+```bash
+git init -b main
+```
+
+```bash
+git add .
+```
+
+```bash
+git commit -m "Initial project structure"
+```
+
+Commits seguintes: `Create MUKEN visual identity` · `Implement product catalog` · `Implement shopping cart` · `Add checkout functionality` · `Add favorites and LocalStorage` · `Improve responsive design` · `Create project documentation` · `Final adjustments and deployment`.
+
+Criar o repositório remoto (pelo site do GitHub, como repositório **público e vazio**, ou pela GitHub CLI):
+
+```bash
+gh repo create JpRibeiro011/muken-store --public --description "MUKEN STORE — e-commerce conceitual"
+```
+
+Conectar o projeto local ao repositório e enviar os arquivos:
+
+```bash
+git remote add origin https://github.com/JpRibeiro011/muken-store.git
+```
+
+```bash
+git push -u origin main
 ```
 
 ## Publicação no GitHub Pages
