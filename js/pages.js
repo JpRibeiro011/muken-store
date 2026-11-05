@@ -928,6 +928,430 @@
   };
 
   /* ==================================================================
+     SOBRE A MUKEN (marca, conceito e identidade visual)
+     ================================================================== */
+  const PALETTE = [
+    ['Preto profundo', '#080A12', 'Fundo principal — o “vazio” que dá profundidade.'],
+    ['Azul marinho', '#10182B', 'Superfícies e cards.'],
+    ['Azul elétrico', '#2563EB', 'Cor principal de ação e destaque.'],
+    ['Azul luminoso', '#60A5FA', 'Brilhos, links e detalhes de energia.'],
+    ['Branco gelo', '#F8FAFC', 'Textos e contrastes.'],
+    ['Cinza', '#94A3B8', 'Textos secundários.'],
+    ['Roxo de destaque', '#8B5CF6', 'Acentos pontuais e gradientes.'],
+  ];
+
+  MK.views.about = {
+    title: 'Sobre a MUKEN',
+    render() {
+      const values = [
+        ['infinity', 'Exclusividade', 'Coleções enxutas e numeradas, pensadas para durar e não para lotar o armário.'],
+        ['sparkles', 'Modernidade', 'Linguagem visual contemporânea, sem excessos e sem pressa de envelhecer.'],
+        ['cpu', 'Tecnologia', 'Materiais técnicos e recursos inteligentes a serviço da rotina.'],
+        ['eye', 'Sofisticação', 'Acabamentos precisos, do alumínio usinado à costura reforçada.'],
+        ['grid', 'Minimalismo', 'Só o essencial: cada elemento precisa justificar sua existência.'],
+        ['zap', 'Personalidade', 'Detalhes de assinatura — o azul elétrico e o símbolo do infinito.'],
+        ['arrow-up-right', 'Inovação', 'Experimentação constante para ir além do que já existe.'],
+      ];
+      const pillars = [
+        ['Infinito', 'O símbolo da marca é um infinito entrelaçado: uma linha contínua que passa por trás de si mesma e cria profundidade real.'],
+        ['Visão', 'O azul elétrico e o azul luminoso traduzem o olhar atento que enxerga além — brilhos, contornos de luz e foco.'],
+        ['Vazio', 'Fundos quase pretos, anéis concêntricos e gradientes sutis criam a sensação de um espaço ilimitado.'],
+        ['Energia', 'Movimento contínuo: a luz que percorre o infinito no hero, a faixa sem fim e as microinterações.'],
+      ];
+      return `
+        <section class="about-hero">
+          <div class="container about-hero__inner">
+            <nav class="breadcrumb" aria-label="Você está em"><ol><li><a href="#/">Início</a></li><li><span aria-current="page">Sobre</span></li></ol></nav>
+            <p class="eyebrow">Sobre a MUKEN</p>
+            <h1 class="display about-hero__title">Projetada para ir <span class="gradient-text">além do limite.</span></h1>
+            <p class="lead">A MUKEN é uma marca conceitual de tecnologia, moda e lifestyle. Criamos produtos essenciais, de design minimalista e acabamento premium, para pessoas que não aceitam limites.</p>
+          </div>
+        </section>
+
+        <section class="section section--tight">
+          <div class="container about-story">
+            <div class="about-story__text" data-reveal>
+              <p class="eyebrow">O nome</p>
+              <h2 class="h2">MUKEN significa infinito.</h2>
+              <p>O nome nasce do conceito de <strong>infinito</strong> — uma ideia celebrada pela cultura pop japonesa contemporânea, em que o infinito aparece como uma barreira impossível de atravessar e, ao mesmo tempo, como um poder sem limites.</p>
+              <p>Transformamos essa referência em uma identidade <strong>totalmente original</strong>: em vez de personagens ou símbolos existentes, usamos quatro conceitos — infinito, visão, vazio e energia — como base para cores, formas, movimento e linguagem.</p>
+              <p class="about-slogan">BEYOND EVERY LIMIT.</p>
+            </div>
+            <div class="about-pillars">
+              ${pillars.map(([title, text], i) => `
+                <article class="about-pillar" data-reveal style="--i:${i}">
+                  <span class="about-pillar__num">0${i + 1}</span>
+                  <h3 class="about-pillar__title">${title}</h3>
+                  <p>${text}</p>
+                </article>`).join('')}
+            </div>
+          </div>
+        </section>
+
+        <section class="section section--alt" aria-labelledby="about-values">
+          <div class="container">
+            ${sectionHead({ eyebrow: 'Personalidade', title: 'Os valores que guiam cada produto', id: 'about-values' })}
+            <div class="values-grid">
+              ${values.map(([ic, title, text], i) => `
+                <article class="value-card" data-reveal style="--i:${i}">
+                  <span class="value-card__icon">${icon(ic)}</span>
+                  <h3 class="value-card__title">${title}</h3>
+                  <p>${text}</p>
+                </article>`).join('')}
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="about-identity">
+          <div class="container">
+            ${sectionHead({ eyebrow: 'Identidade visual', title: 'Um sistema visual próprio', id: 'about-identity', text: 'Logotipo, paleta e tipografia criados para a MUKEN. Clique em uma cor para copiar o código.' })}
+            <div class="brand-board">
+              <figure class="brand-tile brand-tile--dark" data-reveal>
+                <img src="assets/logo/muken-logo-horizontal-dark.svg" alt="Logotipo horizontal da MUKEN para fundos escuros" width="437" height="56">
+                <figcaption>Versão horizontal · fundo escuro</figcaption>
+              </figure>
+              <figure class="brand-tile brand-tile--light" data-reveal style="--i:1">
+                <img src="assets/logo/muken-logo-horizontal-light.svg" alt="Logotipo horizontal da MUKEN para fundos claros" width="437" height="56">
+                <figcaption>Versão horizontal · fundo claro</figcaption>
+              </figure>
+              <figure class="brand-tile brand-tile--symbol" data-reveal style="--i:2">
+                <img src="assets/logo/muken-symbol.svg" alt="Símbolo da MUKEN: infinito entrelaçado em gradiente azul e roxo" width="219" height="107">
+                <figcaption>Símbolo · infinito entrelaçado</figcaption>
+              </figure>
+              <figure class="brand-tile brand-tile--favicon" data-reveal style="--i:3">
+                <img src="assets/icons/favicon.svg" alt="Versão reduzida do símbolo usada como favicon" width="96" height="96">
+                <figcaption>Versão reduzida · favicon</figcaption>
+              </figure>
+            </div>
+            <ul class="palette" aria-label="Paleta de cores da marca">
+              ${PALETTE.map(([name, hex, use], i) => `
+                <li data-reveal style="--i:${i}">
+                  <button type="button" class="swatch" data-action="copy" data-copy="${hex}" data-copy-label="Cor ${name} (${hex}) copiada." aria-label="Copiar ${name}, ${hex}">
+                    <span class="swatch__color" style="background:${hex}"></span>
+                    <span class="swatch__name">${name}</span>
+                    <code class="swatch__hex">${hex}</code>
+                    <span class="swatch__use">${use}</span>
+                  </button>
+                </li>`).join('')}
+            </ul>
+            <div class="type-specimen" data-reveal>
+              <div><p class="type-specimen__label">Títulos · Unbounded</p><p class="type-specimen__display">Aa Infinito 2026</p></div>
+              <div><p class="type-specimen__label">Textos e interface · Inter</p><p class="type-specimen__body">Tecnologia, moda e lifestyle com legibilidade em qualquer tela. 0123456789</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section--tight">
+          <div class="container">
+            <div class="academic-note card card--pad" data-reveal>
+              <span class="academic-note__icon">${icon('info')}</span>
+              <div>
+                <h2 class="h3">Nota acadêmica</h2>
+                <p>A MUKEN STORE é uma <strong>loja conceitual</strong> desenvolvida como atividade acadêmica com a metodologia <strong>Vibe Coding</strong>. O nome e a identidade fazem referência conceitual ao infinito presente no universo de <em>Jujutsu Kaisen</em> (associado ao personagem Satoru Gojo), traduzida em uma identidade visual original — sem uso de personagens, logotipos, imagens ou artes oficiais da franquia, e sem qualquer vínculo com seus detentores. Produtos, preços, avaliações e pedidos são fictícios.</p>
+              </div>
+            </div>
+            <div class="about-cta" data-reveal>
+              <h2 class="h2">Pronto para ir além?</h2>
+              <a class="btn btn--primary btn--lg" href="#/catalogo">Explorar a coleção ${icon('arrow-right', 'btn__arrow')}</a>
+            </div>
+          </div>
+        </section>`;
+    },
+  };
+
+  /* ==================================================================
+     CONTATO (formulário validado + FAQ)
+     ================================================================== */
+  const SUBJECTS = ['Dúvida sobre produto', 'Acompanhamento de pedido', 'Trocas e devoluções', 'Parcerias e imprensa', 'Outro assunto'];
+  const FAQ = [
+    ['Os pagamentos são reais?', 'Não. A MUKEN STORE é um projeto acadêmico: PIX, cartão e boleto são simulados e nenhum valor é cobrado. Nunca digite dados reais de cartão.'],
+    ['Como usar os cupons?', 'No carrinho, digite MUKEN10, INFINITO15 (a partir de R$ 500), BEYOND50 (a partir de R$ 350) ou FRETEZERO e clique em “Aplicar”.'],
+    ['Qual é o prazo de entrega?', 'O prazo é estimado pelo CEP: de 2 a 12 dias úteis na entrega padrão e de 1 a 6 dias úteis na expressa. A entrega é simulada.'],
+    ['Como funciona a troca?', 'Na proposta da marca, trocas são gratuitas em até 30 dias após o recebimento. Como a loja é conceitual, nenhum envio real acontece.'],
+    ['Onde ficam salvos meus dados?', 'Somente no LocalStorage do seu navegador. Você pode ver e apagar tudo na página de Política de Privacidade.'],
+  ];
+
+  function contactFormHTML() {
+    const orders = MK.orders ? MK.orders.list().slice(0, 10) : [];
+    return `
+      <form class="contact-form card card--pad" data-contact-form novalidate>
+        <h2 class="h3">Envie uma mensagem</h2>
+        <div class="form-grid">
+          <div class="field field--half">
+            <label class="field__label" for="ct-name">Nome<span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="ct-name" name="name" autocomplete="name" maxlength="80" required aria-required="true" aria-describedby="ct-name-error">
+            <p class="field-error" id="ct-name-error" aria-live="polite"></p>
+          </div>
+          <div class="field field--half">
+            <label class="field__label" for="ct-email">E-mail<span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="ct-email" name="email" type="email" autocomplete="email" maxlength="80" required aria-required="true" aria-describedby="ct-email-error">
+            <p class="field-error" id="ct-email-error" aria-live="polite"></p>
+          </div>
+          <div class="field field--half">
+            <label class="field__label" for="ct-subject">Assunto<span class="req" aria-hidden="true">*</span></label>
+            <select class="select" id="ct-subject" name="subject" required aria-required="true" aria-describedby="ct-subject-error">
+              <option value="">Selecione</option>${SUBJECTS.map((s) => `<option>${s}</option>`).join('')}
+            </select>
+            <p class="field-error" id="ct-subject-error" aria-live="polite"></p>
+          </div>
+          <div class="field field--half">
+            <label class="field__label" for="ct-order">Pedido relacionado<span class="opt">(opcional)</span></label>
+            <select class="select" id="ct-order" name="order">
+              <option value="">${orders.length ? 'Nenhum' : 'Você ainda não tem pedidos'}</option>
+              ${orders.map((o) => `<option value="${esc(o.id)}">${esc(o.id)} — ${MK.utils.formatShortDate(o.createdAt)}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <div class="field__row">
+              <label class="field__label" for="ct-message">Mensagem<span class="req" aria-hidden="true">*</span></label>
+              <span class="field-hint" data-char-count aria-live="polite">0/500</span>
+            </div>
+            <textarea class="textarea" id="ct-message" name="message" maxlength="500" required aria-required="true" aria-describedby="ct-message-hint ct-message-error"></textarea>
+            <p class="field-hint" id="ct-message-hint">Mínimo de 20 caracteres.</p>
+            <p class="field-error" id="ct-message-error" aria-live="polite"></p>
+          </div>
+        </div>
+        <label class="check">
+          <input type="checkbox" name="consent" aria-describedby="ct-consent-error">
+          <span class="check__box">${icon('check')}</span>
+          <span>Autorizo o uso destes dados apenas para responder ao meu contato, conforme a <a class="text-link" href="#/privacidade">Política de Privacidade</a>.<span class="req" aria-hidden="true">*</span></span>
+        </label>
+        <p class="field-error" id="ct-consent-error" aria-live="polite"></p>
+        <button class="btn btn--primary btn--lg" type="submit">${icon('mail')}Enviar mensagem</button>
+        <p class="small muted">Envio simulado: a mensagem fica registrada apenas neste navegador.</p>
+      </form>`;
+  }
+
+  MK.views.contact = {
+    title: 'Contato',
+    render() {
+      return `
+        <section class="container page-body">
+          <div class="page-head">
+            <nav class="breadcrumb" aria-label="Você está em"><ol><li><a href="#/">Início</a></li><li><span aria-current="page">Contato</span></li></ol></nav>
+            <p class="eyebrow">Atendimento</p>
+            <h1 class="h1">Fale com a MUKEN</h1>
+            <p>Dúvidas sobre produtos, pedidos ou trocas? Envie uma mensagem — o atendimento é simulado, mas o formulário funciona de verdade.</p>
+          </div>
+          <div class="contact-layout">
+            <div data-contact-slot>${contactFormHTML()}</div>
+            <aside class="contact-aside">
+              <ul class="contact-channels">
+                <li class="card card--pad">${icon('mail')}<div><h2 class="contact-channels__title">E-mail</h2><p>atendimento@muken.example</p><p class="small muted">Endereço fictício (domínio reservado para exemplos)</p></div></li>
+                <li class="card card--pad">${icon('chat')}<div><h2 class="contact-channels__title">Chat</h2><p>Seg. a sex., das 9h às 18h</p><p class="small muted">Canal conceitual</p></div></li>
+                <li class="card card--pad">${icon('map-pin')}<div><h2 class="contact-channels__title">Showroom</h2><p>São Paulo, SP — Brasil</p><p class="small muted">Localização conceitual</p></div></li>
+              </ul>
+              <div class="faq">
+                <h2 class="h3">Perguntas frequentes</h2>
+                <div class="accordion">
+                  ${FAQ.map(([q, a], i) => `
+                    <details ${i === 0 ? 'open' : ''}>
+                      <summary>${q}${icon('plus')}</summary>
+                      <div class="accordion__content"><p>${a}</p></div>
+                    </details>`).join('')}
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>`;
+    },
+    mount(root) {
+      const slot = $('[data-contact-slot]', root);
+
+      const bind = () => {
+        const form = $('[data-contact-form]', slot);
+        const counter = $('[data-char-count]', form);
+        const rules = {
+          name: (v) => (v.trim().length >= 3 ? '' : 'Informe seu nome (mínimo de 3 letras).'),
+          email: (v) => (MK.utils.isEmail(v) ? '' : 'Informe um e-mail válido, como nome@dominio.com.'),
+          subject: (v) => (v ? '' : 'Selecione o assunto.'),
+          message: (v) => (v.trim().length >= 20 ? '' : `Escreva pelo menos 20 caracteres (faltam ${20 - v.trim().length}).`),
+        };
+        const check = (name) => {
+          const input = form.elements[name];
+          const message = rules[name](input.value);
+          input.setAttribute('aria-invalid', String(Boolean(message)));
+          $(`#ct-${name}-error`, form).textContent = message;
+          return message;
+        };
+
+        form.addEventListener('input', (event) => {
+          if (event.target.name === 'message') counter.textContent = `${event.target.value.length}/500`;
+          if (rules[event.target.name] && event.target.getAttribute('aria-invalid') === 'true') check(event.target.name);
+        });
+        form.addEventListener('focusout', (event) => {
+          if (rules[event.target.name] && event.target.value.trim()) check(event.target.name);
+        });
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const invalid = Object.keys(rules).filter((name) => check(name));
+          const consent = form.elements.consent;
+          const consentError = $('#ct-consent-error', form);
+          consentError.textContent = consent.checked ? '' : 'É necessário autorizar o uso dos dados para enviar.';
+          consent.setAttribute('aria-invalid', String(!consent.checked));
+          if (invalid.length || !consent.checked) {
+            (invalid.length ? form.elements[invalid[0]] : consent).focus();
+            return;
+          }
+          const button = form.querySelector('button[type="submit"]');
+          MK.ui.setBusy(button, true);
+          await MK.utils.sleep(900);
+          const protocol = `ATD-${MK.utils.randomCode(6)}`;
+          const messages = MK.storage.read('messages', []);
+          messages.push({
+            protocol,
+            name: form.elements.name.value.trim(),
+            email: form.elements.email.value.trim(),
+            subject: form.elements.subject.value,
+            order: form.elements.order.value || null,
+            message: form.elements.message.value.trim(),
+            sentAt: Date.now(),
+          });
+          MK.storage.write('messages', messages);
+          slot.innerHTML = `
+            <div class="contact-success card card--pad" tabindex="-1">
+              <div class="success__check" aria-hidden="true"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="36"/><path d="M25 41.5 35.5 52 56 30"/></svg></div>
+              <h2 class="h2">Mensagem enviada!</h2>
+              <p>Obrigado, ${esc(form.elements.name.value.trim().split(/\s+/)[0])}. Seu protocolo é <strong>${protocol}</strong>. Em uma loja real, responderíamos em até 1 dia útil.</p>
+              <button class="btn btn--secondary" type="button" data-new-message>${icon('mail')}Enviar outra mensagem</button>
+            </div>`;
+          $('.contact-success', slot).focus();
+          MK.ui.toast({ type: 'success', title: 'Mensagem enviada (simulação)', message: `Protocolo ${protocol}.` });
+        });
+      };
+
+      slot.addEventListener('click', (event) => {
+        if (event.target.closest('[data-new-message]')) {
+          slot.innerHTML = contactFormHTML();
+          bind();
+          $('#ct-name', slot).focus();
+        }
+      });
+      bind();
+      return null;
+    },
+  };
+
+  /* ==================================================================
+     POLÍTICA DE PRIVACIDADE (com gestão real dos dados locais)
+     ================================================================== */
+  function storedDataTable() {
+    const S = MK.storage;
+    const stored = new Set(S.keys());
+    const rows = Object.entries(S.KEYS).map(([key, info]) => {
+      const has = stored.has(key);
+      return `
+        <tr>
+          <th scope="row">${esc(info.label)}<br><code>${S.PREFIX}${key}</code></th>
+          <td>${esc(info.description)}</td>
+          <td>${has ? '<span class="badge badge--info">Salvo</span>' : '<span class="badge badge--neutral">Vazio</span>'}</td>
+          <td>${has ? `<button class="btn btn--link small" type="button" data-delete-key="${key}" aria-label="Apagar ${esc(info.label)}">Apagar</button>` : '—'}</td>
+        </tr>`;
+    }).join('');
+    const bytes = S.usage();
+    const size = bytes < 1024 ? `${bytes} bytes` : `${(bytes / 1024).toFixed(1).replace('.', ',')} KB`;
+    return `
+      <div class="table-wrap">
+        <table class="table data-table">
+          <caption class="sr-only">Dados da MUKEN salvos neste navegador</caption>
+          <thead><tr><th scope="col">Dado</th><th scope="col">Finalidade</th><th scope="col">Situação</th><th scope="col"><span class="sr-only">Ação</span></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <p class="small muted">Espaço ocupado: aproximadamente ${size}${S.isPersistent() ? '' : ' (armazenamento local indisponível: os dados valem apenas para esta sessão)'}.</p>`;
+  }
+
+  MK.views.privacy = {
+    title: 'Política de Privacidade',
+    render() {
+      return `
+        <section class="container container--narrow page-body">
+          <div class="page-head">
+            <nav class="breadcrumb" aria-label="Você está em"><ol><li><a href="#/">Início</a></li><li><span aria-current="page">Privacidade</span></li></ol></nav>
+            <p class="eyebrow">Transparência</p>
+            <h1 class="h1">Política de Privacidade</h1>
+            <p>Última atualização: 5 de novembro de 2026. Inspirada nos princípios da Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).</p>
+          </div>
+          <div class="prose">
+            <p class="callout">${icon('info')}A MUKEN STORE é uma <strong>loja conceitual de um projeto acadêmico</strong>. Não há servidores, contas de usuário, cobranças ou entregas reais. Use sempre dados fictícios.</p>
+
+            <h2>1. Quais dados tratamos</h2>
+            <p>Somente os dados que você mesmo informa ou gera ao usar a loja: itens do carrinho e favoritos, pedidos simulados (com nome, e-mail, telefone, endereço e CPF <strong>mascarado</strong>), mensagens do formulário de contato, e-mail da newsletter e preferências, como o tema.</p>
+
+            <h2>2. Onde os dados ficam</h2>
+            <p>Tudo fica no <strong>LocalStorage do seu navegador</strong>, neste dispositivo. Nenhum dado pessoal é enviado para servidores da MUKEN — eles não existem. Outra pessoa que use o mesmo navegador poderá ver essas informações.</p>
+
+            <h2>3. Finalidade</h2>
+            <ul>
+              <li>Manter carrinho, favoritos e histórico de pedidos entre visitas;</li>
+              <li>Preencher o checkout mais rápido, apenas se você autorizar “salvar meus dados”;</li>
+              <li>Lembrar suas preferências (tema e produtos vistos recentemente).</li>
+            </ul>
+
+            <h2>4. Compartilhamento</h2>
+            <p>Não compartilhamos dados. A única comunicação externa opcional é a consulta de endereço pelo CEP no checkout: quando você digita um CEP, <strong>apenas o CEP</strong> é enviado ao serviço público ViaCEP para preencher rua, cidade e estado. Se preferir, preencha o endereço manualmente.</p>
+
+            <h2>5. Cookies</h2>
+            <p>A loja não utiliza cookies nem ferramentas de rastreamento ou publicidade. As fontes são hospedadas no próprio site.</p>
+
+            <h2>6. Segurança</h2>
+            <p>Nunca solicitamos dados reais de cartão: o checkout usa apenas cartões de teste. O CPF informado é validado no próprio navegador e salvo somente de forma mascarada no pedido.</p>
+
+            <h2>7. Seus direitos</h2>
+            <p>Como titular, você pode acessar, corrigir e eliminar seus dados (LGPD, art. 18). Aqui você exerce esses direitos diretamente: veja abaixo o que está salvo e apague o que quiser.</p>
+          </div>
+
+          <section class="data-panel card card--pad" aria-labelledby="data-title">
+            <h2 class="h3" id="data-title">${icon('shield')} Seus dados neste navegador</h2>
+            <div data-stored-data>${storedDataTable()}</div>
+            <button class="btn btn--danger" type="button" data-delete-all>${icon('trash')}Apagar todos os meus dados</button>
+          </section>
+
+          <div class="prose">
+            <h2>8. Contato</h2>
+            <p>Dúvidas sobre esta política? Use a página de <a href="#/contato">contato</a> (simulada).</p>
+          </div>
+        </section>`;
+    },
+    mount(root) {
+      const refresh = () => { $('[data-stored-data]', root).innerHTML = storedDataTable(); };
+      root.addEventListener('click', async (event) => {
+        const one = event.target.closest('[data-delete-key]');
+        if (one) {
+          const key = one.dataset.deleteKey;
+          const info = MK.storage.KEYS[key];
+          const ok = await MK.ui.confirm({ title: `Apagar “${info.label}”?`, message: info.description, confirmLabel: 'Apagar' });
+          if (!ok) return;
+          MK.storage.remove(key);
+          if (key === 'cart' || key === 'coupon') MK.cart.reload();
+          if (key === 'favorites') MK.favorites.reload();
+          if (key === 'inventory') MK.inventory.reset();
+          if (key === 'theme') {
+            MK.theme.set('dark'); // volta ao padrão da marca e sincroniza os botões
+            MK.storage.remove('theme');
+          }
+          refresh();
+          MK.ui.toast({ type: 'success', title: 'Dado apagado', message: `${info.label} foi removido deste navegador.` });
+          return;
+        }
+        if (event.target.closest('[data-delete-all]')) {
+          const ok = await MK.ui.confirm({
+            title: 'Apagar todos os dados?',
+            message: 'Carrinho, favoritos, pedidos, estoque simulado, preferências e mensagens serão apagados deste navegador. A página será recarregada.',
+            confirmLabel: 'Apagar tudo',
+          });
+          if (!ok) return;
+          MK.storage.clearAll();
+          MK.ui.toast({ type: 'success', title: 'Dados apagados', message: 'Recarregando a loja…' });
+          setTimeout(() => window.location.reload(), 900);
+        }
+      });
+      return null;
+    },
+  };
+
+  /* ==================================================================
      404
      ================================================================== */
   MK.views.notFound = {

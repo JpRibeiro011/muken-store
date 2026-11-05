@@ -368,6 +368,12 @@
       MK.ui.openDialog(document.getElementById('cart-drawer'));
     },
 
+    /** Recarrega o estado a partir do LocalStorage (ex.: dados apagados). */
+    reload() {
+      load();
+      MK.utils.emit('cart:change', { count: cart.count(), action: 'sync' });
+    },
+
     init() {
       const adjusted = load();
       updateHeader(false);
