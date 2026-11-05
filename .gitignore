@@ -1,0 +1,22 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependências e artefatos de ferramentas opcionais de teste
+node_modules/
+package-lock.json
+test-results/
+playwright-report/
+tests/output/
+
+# Logs e temporários
+*.log
+*.tmp
+.cache/
