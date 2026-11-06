@@ -13,7 +13,7 @@ O desenvolvimento seguiu um fluxo real de *Vibe Coding*: um **prompt mestre** (r
 
 Por isso, em cada registro abaixo, o campo **“Prompt completo”** reproduz o **trecho exato do prompt mestre** que orientou aquela etapa. Os campos “Resumo da resposta da IA”, “Aplicação prática” e “Adaptações realizadas” descrevem o que de fato foi produzido e as decisões e correções reais, que podem ser conferidas no código e no histórico de commits do repositório.
 
-Também há registro da única interação adicional durante o processo (registro 12). Prompts feitos depois desta versão devem ser acrescentados na seção [Prompts adicionais](#prompts-adicionais).
+Também estão registradas as interações adicionais reais que ocorreram durante o processo (registros 12 e 13). Prompts feitos depois desta versão devem ser acrescentados na seção [Prompts adicionais](#prompts-adicionais).
 
 | # | Etapa | Commit relacionado |
 | --- | --- | --- |
@@ -29,6 +29,7 @@ Também há registro da única interação adicional durante o processo (registr
 | 10 | Testes e melhorias de UX | `Add end-to-end tests and social preview image` |
 | 11 | Documentação e publicação | `Create project documentation` / `Final adjustments and deployment` |
 | 12 | Interação: “por que parou?” | — |
+| 13 | Publicação no GitHub Pages | `Update documentation after deployment` |
 
 ---
 
@@ -267,7 +268,7 @@ Também há registro da única interação adicional durante o processo (registr
 
 **Adaptações realizadas:**
 - Informações que dependem do aluno (instituição, curso, disciplina, professor, reflexões pessoais) ficaram marcadas como **[preencher]** no relatório.
-- A publicação depende de o repositório `muken-store` existir no GitHub, pois o ambiente do agente não tem permissão para criar repositórios novos (ver relatório, seção 11).
+- A publicação exigiu ações do aluno no GitHub, pois o ambiente do agente não tem permissão para criar repositórios novos (ver registro 13).
 
 ---
 
@@ -284,6 +285,40 @@ Também há registro da única interação adicional durante o processo (registr
 **Aplicação prática:** nenhuma alteração de código; o trabalho seguiu com `ui.js`, `app.js` e a página inicial.
 
 **Adaptações realizadas:** a partir daí, o agente passou a informar o progresso com mais frequência durante as etapas longas.
+
+---
+
+## 13. Publicação no GitHub Pages
+
+**Objetivo:** colocar a loja no ar no GitHub Pages e verificar o funcionamento após a publicação.
+
+**Prompts completos (sequência real de mensagens do aluno):**
+
+> criei o repositorio
+
+> *(captura de tela do GitHub Desktop com o erro “Repository creation failed. (name already exists on this account)”)*
+
+> publicado
+
+> publicado — está dando erro 404 *(com captura de tela da página 404 do GitHub Pages)*
+
+> pode substituir
+
+> pronto
+
+**Resumo da resposta da IA:**
+- Com o repositório criado, o agente o conectou à sessão, mas o envio foi recusado (HTTP 403): o aplicativo do Claude no GitHub não tinha permissão para esse repositório. O agente explicou como liberar o acesso ou enviar pelo próprio computador.
+- Diante do erro do GitHub Desktop, explicou que “Publish repository” tenta criar um repositório novo e orientou a configurar o endereço remoto em *Repository settings → Remote*.
+- Como o domínio `github.io` estava bloqueado na rede do ambiente, propôs (e o aluno aprovou) um ambiente com acesso apenas a `jpribeiro011.github.io` e `viacep.com.br`.
+- Diante do 404, inspecionou o repositório remoto. Os arquivos tinham sido enviados pelo upload do site do GitHub dentro de uma subpasta `muken-store/`: o `index.html` não estava na raiz e o histórico organizado tinha sido trocado por 3 commits genéricos. A loja funcionava em `/muken-store/muken-store/`.
+- Com a autorização (“pode substituir”) e a permissão do aplicativo concedida (“pronto”), substituiu o conteúdo pelo histórico original usando `git push --force-with-lease`, que só sobrescreve se o remoto ainda estiver no estado inspecionado. O site entrou no ar em cerca de 1,5 minuto.
+- Por fim, executou a suíte de testes **contra o site publicado: 47 de 47 aprovados**. Também conferiu os tipos dos arquivos servidos e a página 404 personalizada.
+
+**Aplicação prática:** repositório `JpRibeiro011/muken-store` com os commits organizados; site em https://jpribeiro011.github.io/muken-store/; suíte de testes com a opção `MUKEN_URL` para testar o site publicado.
+
+**Adaptações realizadas:**
+- O envio que substituiu o conteúdo do repositório só foi feito após autorização explícita do aluno, e de forma condicionada ao estado inspecionado.
+- O relatório (seção 11) registra essas dificuldades de publicação. Os repositórios extras criados nas tentativas (`muken` e `muken-store-1`) não foram alterados pelo agente.
 
 ---
 

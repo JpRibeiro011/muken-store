@@ -5,6 +5,8 @@
      npm install --no-save playwright axe-core
      npx playwright install chromium
      node tests/e2e.js
+   Para testar o site publicado em vez do servidor local:
+     MUKEN_URL=https://jpribeiro011.github.io/muken-store/ node tests/e2e.js
    O script sobe um servidor estático próprio (sem dependências), abre a
    loja no Chromium e valida as funcionalidades. A auditoria de
    acessibilidade (axe-core) só roda se o pacote estiver instalado.
@@ -60,8 +62,10 @@ const money = (text) => Number(String(text).replace(/[^\d,]/g, '').replace(',', 
 const clean = (text) => String(text).replace(/\s+/g, ' ').trim();
 
 (async () => {
-  const server = await startServer();
-  const BASE = `http://127.0.0.1:${server.address().port}/`;
+  // MUKEN_URL permite testar o site publicado (ex.: GitHub Pages) em vez do servidor local
+  const external = process.env.MUKEN_URL ? process.env.MUKEN_URL.replace(/\/?$/, '/') : null;
+  const server = external ? null : await startServer();
+  const BASE = external || `http://127.0.0.1:${server.address().port}/`;
   const browser = await chromium.launch();
   const context = await browser.newContext({ viewport: { width: 1366, height: 900 } });
   const consoleErrors = [];
@@ -522,7 +526,7 @@ const clean = (text) => String(text).replace(/\s+/g, ' ').trim();
   });
 
   await browser.close();
-  server.close();
+  if (server) server.close();
   const failed = results.filter((r) => !r.ok);
   console.log(`\nResultado: ${results.length - failed.length} de ${results.length} testes passaram.`);
   process.exit(failed.length ? 1 : 0);

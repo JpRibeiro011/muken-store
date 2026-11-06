@@ -203,6 +203,12 @@ npx playwright install chromium
 node tests/e2e.js
 ```
 
+Para testar o site publicado em vez do servidor local:
+
+```bash
+MUKEN_URL=https://jpribeiro011.github.io/muken-store/ node tests/e2e.js
+```
+
 ## Versionamento com Git
 
 Comandos usados para versionar e publicar o projeto (o histórico de commits do repositório segue as etapas do desenvolvimento):
@@ -243,6 +249,8 @@ O site é 100% estático, usa apenas caminhos relativos e um roteador por hash (
 
 - 🌐 **Loja publicada:** https://jpribeiro011.github.io/muken-store/
 - 📁 **Repositório:** https://github.com/JpRibeiro011/muken-store
+
+✅ **Publicação verificada:** a suíte de testes foi executada contra o próprio site publicado, com **47 de 47 testes aprovados**.
 
 ## Informações acadêmicas
 

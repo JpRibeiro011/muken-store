@@ -4,7 +4,7 @@
 > - [ ] Dados da capa: instituição, curso, disciplina, professor(a), cidade e data.
 > - [ ] Reflexão pessoal na Conclusão (seção 14).
 > - [ ] Datas de acesso das referências (seção 15).
-> - [ ] Confirmar os links públicos após a publicação no GitHub Pages (seções 9 e 12).
+> - [x] Links públicos confirmados: site publicado e verificado em 6 de novembro de 2026.
 
 ---
 
@@ -192,7 +192,7 @@ muken-store/
 | `css/style.css` | Tokens, temas, base, layout e páginas | 4.248 |
 | `css/components.css` | Componentes reutilizáveis | 2.404 |
 | `css/responsive.css` | Adaptações por tamanho de tela | 927 |
-| `tests/e2e.js` | Testes ponta a ponta (opcional) | 536 |
+| `tests/e2e.js` | Testes ponta a ponta (opcional) | 540 |
 
 *Contagem de linhas medida com `wc -l`. Totais: 6.622 linhas de JavaScript e 7.579 linhas de CSS. O site completo (sem `docs/` e `tests/`) ocupa cerca de 1,4 MB.*
 
@@ -212,7 +212,7 @@ muken-store/
 | Extras | Animações de entrada, parallax, notificações, skeleton, visualização rápida, relacionados, 404, Sobre, Contato, Privacidade, indicadores de estoque, cupons, voltar ao topo | diversos |
 
 **Links do projeto:**
-- Loja publicada: https://jpribeiro011.github.io/muken-store/ — *[confirmar após a publicação]*
+- Loja publicada: https://jpribeiro011.github.io/muken-store/ (verificada em 6 de novembro de 2026)
 - Repositório: https://github.com/JpRibeiro011/muken-store
 
 ## 10. Capturas de tela
@@ -280,6 +280,14 @@ As dificuldades abaixo ocorreram de fato durante o desenvolvimento e foram regis
 7. **Testes automatizados.** Na primeira execução da suíte, houve falhas do próprio teste: a moeda formatada pelo `Intl` usa espaço não separável; o leitor de valores capturou o “4” de “(4 itens)”; navegar para a mesma rota não dispara a troca de página. Depois de corrigidos, os testes revelaram uma melhoria real: o checkout vazio não percebia itens adicionados em outra aba.
 8. **Revisão visual.** Algumas falhas só apareceram nas capturas de tela: duas ilustrações pouco legíveis (os fones pareciam câmeras) foram redesenhadas, e a visualização rápida tinha a imagem invadindo a coluna de texto em telas largas (combinação de `aspect-ratio` com `min-height`).
 9. **Interrupção da sessão.** O desenvolvimento foi interrompido uma vez por um sinal de interrupção da sessão; o agente explicou o ocorrido e retomou do ponto em que havia parado (Apêndice A, registro 12).
+10. **Publicação no GitHub Pages.** Foi a etapa com mais obstáculos fora do código (Apêndice A, registro 13):
+    - O envio dos commits pelo agente foi recusado (HTTP 403) porque o aplicativo do Claude no GitHub não tinha permissão para o repositório recém-criado.
+    - No GitHub Desktop, o botão “Publish repository” falhou com *name already exists on this account*, porque ele tenta criar um repositório novo, e o `muken-store` já existia.
+    - O envio feito pelo upload do site do GitHub colocou todos os arquivos dentro de uma subpasta `muken-store/`. O site respondeu **404** no endereço correto (o GitHub Pages só publica a partir da raiz ou de `/docs`), o histórico de commits organizados foi substituído por commits genéricos e o `.gitignore`, oculto, não foi enviado.
+    - O diagnóstico foi feito inspecionando o repositório remoto: o `index.html` estava em `muken-store/index.html`, e a loja funcionava em `/muken-store/muken-store/`.
+    - Solução: com a permissão do aplicativo concedida e a autorização explícita do aluno, o conteúdo foi substituído pelo histórico original com `git push --force-with-lease`, e o site entrou no ar cerca de 1,5 minuto depois.
+    - Além disso, o domínio `github.io` estava bloqueado na rede do ambiente do agente. Foi criado um ambiente com acesso apenas a esse domínio (e à ViaCEP) para verificar o site publicado.
+    - A ViaCEP continuou encerrando as conexões vindas do ambiente na nuvem, por isso a consulta real de CEP não pôde ser testada pelo agente. Ela foi validada com respostas simuladas, e o checkout tem preenchimento manual como alternativa.
 
 *[preencher, opcional] Dificuldades percebidas pelo aluno ao conduzir o processo (ex.: formular prompts, revisar o código gerado, entender a arquitetura).*
 
@@ -288,7 +296,7 @@ As dificuldades abaixo ocorreram de fato durante o desenvolvimento e foram regis
 | Indicador | Resultado verificado |
 | --- | --- |
 | Produtos cadastrados | 20 (5 por categoria), todos com os campos exigidos |
-| Testes ponta a ponta (`tests/e2e.js`) | **47 de 47 aprovados** |
+| Testes ponta a ponta (`tests/e2e.js`) | **47 de 47 aprovados** no servidor local e **47 de 47** executados contra o site publicado no GitHub Pages |
 | Acessibilidade (axe-core, WCAG 2.1 A/AA) | **0 violações** em 13 rotas × 2 temas, e também com modal, gaveta e menu abertos |
 | Contraste | Nenhuma violação de contraste nos temas claro e escuro |
 | Responsividade | Sem rolagem horizontal em 320, 375, 414, 768, 1024 e 1280 px |
@@ -297,7 +305,7 @@ As dificuldades abaixo ocorreram de fato durante o desenvolvimento e foram regis
 | Funcionamento sem servidor | Verificado abrindo o `index.html` via `file://` |
 | Peso do site | ≈ 1,4 MB (fontes, ícones, 20 ilustrações e imagem de compartilhamento) |
 | Versionamento | Commits organizados por etapa, seguindo a sugestão do enunciado |
-| Publicação | GitHub Pages — *[preencher/confirmar o link após a publicação]* |
+| Publicação | No ar em https://jpribeiro011.github.io/muken-store/; arquivos servidos com os tipos corretos e página 404 personalizada funcionando |
 
 O resultado é uma loja que se comporta como um e-commerce real dentro dos limites de um site estático: o estado sobrevive ao fechamento do navegador, os valores são consistentes em todas as telas, o estoque é respeitado de ponta a ponta e as decisões de segurança impedem o uso indevido de dados reais.
 
@@ -367,3 +375,4 @@ O histórico completo, com objetivo, prompt, resumo da resposta da IA, aplicaç�
 | 10 | Testes e UX | Suíte com 47 testes, correções e melhorias |
 | 11 | Documentação e publicação | README, relatório, histórico, capturas |
 | 12 | “por que parou?” | Explicação da interrupção e retomada |
+| 13 | Publicação no GitHub Pages | Diagnóstico do 404 (arquivos em subpasta), substituição pelo histórico original, verificação do site no ar |
