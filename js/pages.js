@@ -13,7 +13,6 @@
   const { escapeHTML: esc, formatPrice, formatRating, $, $$ } = MK.utils;
   const { icon } = MK.ui;
 
-  const ORBIT_PATH = 'M568.0 150.0 L567.4 163.1 L565.5 176.0 L562.5 188.6 L558.4 200.5 L553.2 211.7 L547.1 222.1 L540.2 231.5 L532.7 239.9 L524.5 247.1 L516.0 253.3 L507.1 258.4 L498.0 262.4 L488.8 265.3 L479.5 267.2 L470.3 268.3 L461.1 268.4 L452.1 267.7 L443.3 266.4 L434.7 264.3 L426.3 261.7 L418.2 258.5 L410.3 254.8 L402.6 250.7 L395.2 246.3 L388.0 241.5 L381.1 236.4 L374.4 231.1 L367.8 225.5 L361.5 219.8 L355.3 213.9 L349.3 207.9 L343.5 201.7 L337.8 195.4 L332.2 189.1 L326.6 182.7 L321.2 176.2 L315.9 169.7 L310.5 163.1 L305.3 156.6 L300.0 150.0 L294.7 143.4 L289.5 136.9 L284.1 130.3 L278.8 123.8 L273.4 117.3 L267.8 110.9 L262.2 104.6 L256.5 98.3 L250.7 92.1 L244.7 86.1 L238.5 80.2 L232.2 74.5 L225.6 68.9 L218.9 63.6 L212.0 58.5 L204.8 53.7 L197.4 49.3 L189.7 45.2 L181.8 41.5 L173.7 38.3 L165.3 35.7 L156.7 33.6 L147.9 32.3 L138.9 31.6 L129.7 31.7 L120.5 32.8 L111.2 34.7 L102.0 37.6 L92.9 41.6 L84.0 46.7 L75.5 52.9 L67.3 60.1 L59.8 68.5 L52.9 77.9 L46.8 88.3 L41.6 99.5 L37.5 111.4 L34.5 124.0 L32.6 136.9 L32.0 150.0 L32.6 163.1 L34.5 176.0 L37.5 188.6 L41.6 200.5 L46.8 211.7 L52.9 222.1 L59.8 231.5 L67.3 239.9 L75.5 247.1 L84.0 253.3 L92.9 258.4 L102.0 262.4 L111.2 265.3 L120.5 267.2 L129.7 268.3 L138.9 268.4 L147.9 267.7 L156.7 266.4 L165.3 264.3 L173.7 261.7 L181.8 258.5 L189.7 254.8 L197.4 250.7 L204.8 246.3 L212.0 241.5 L218.9 236.4 L225.6 231.1 L232.2 225.5 L238.5 219.8 L244.7 213.9 L250.7 207.9 L256.5 201.7 L262.2 195.4 L267.8 189.1 L273.4 182.7 L278.8 176.2 L284.1 169.7 L289.5 163.1 L294.7 156.6 L300.0 150.0 L305.3 143.4 L310.5 136.9 L315.9 130.3 L321.2 123.8 L326.6 117.3 L332.2 110.9 L337.8 104.6 L343.5 98.3 L349.3 92.1 L355.3 86.1 L361.5 80.2 L367.8 74.5 L374.4 68.9 L381.1 63.6 L388.0 58.5 L395.2 53.7 L402.6 49.3 L410.3 45.2 L418.2 41.5 L426.3 38.3 L434.7 35.7 L443.3 33.6 L452.1 32.3 L461.1 31.6 L470.3 31.7 L479.5 32.8 L488.8 34.7 L498.0 37.6 L507.1 41.6 L516.0 46.7 L524.5 52.9 L532.7 60.1 L540.2 68.5 L547.1 77.9 L553.2 88.3 L558.4 99.5 L562.5 111.4 L565.5 124.0 L567.4 136.9Z';
   const RECENT_LIMIT = 8;
 
   /* ==================================================================
@@ -36,87 +35,190 @@
   MK.recent = recent;
 
   /* ==================================================================
-     INÍCIO — HERO "BEYOND EVERY LIMIT."
+     INÍCIO — HERO "SEIS OLHOS" (六眼)
+     O olho é uma ilustração original (íris procedural em SVG). A
+     referência a Satoru Gojo é só conceitual: o azul dos Seis Olhos,
+     o Infinito (無限) e o Vazio Ilimitado (無量空処) — sem personagens,
+     logotipos ou artes oficiais da franquia.
      ================================================================== */
+  let hudCache = '';
+
+  /** Anel técnico ao redor do olho: marcações em graus e texto em órbita. */
+  function eyeHUD() {
+    if (hudCache) return hudCache;
+    const C = 300;
+    const pt = (r, deg) => {
+      const a = ((deg - 90) * Math.PI) / 180;
+      return [(C + r * Math.cos(a)).toFixed(1), (C + r * Math.sin(a)).toFixed(1)];
+    };
+    const ticks = [];
+    for (let deg = 0; deg < 360; deg += 2) {
+      const major = deg % 30 === 0;
+      const [x1, y1] = pt(major ? 272 : deg % 10 === 0 ? 281 : 287, deg);
+      const [x2, y2] = pt(294, deg);
+      ticks.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"${major ? ' class="hud-major"' : ''}/>`);
+    }
+    const arc = (r, from, to) => {
+      const [x1, y1] = pt(r, from);
+      const [x2, y2] = pt(r, to);
+      return `<path class="hud-accent" d="M${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2}"/>`;
+    };
+    const marks = [0, 90, 180, 270].map((deg) => {
+      const [x, y] = pt(298, deg);
+      return `<rect class="hud-dot" x="${(x - 2.5).toFixed(1)}" y="${(y - 2.5).toFixed(1)}" width="5" height="5" transform="rotate(${deg} ${x} ${y})"/>`;
+    }).join('');
+    const phrase = 'MUKEN OCULAR SYSTEM · SIX EYES · CALIBRATED TO INFINITY · ';
+    hudCache = `
+      <svg class="eye__hud" viewBox="0 0 600 600" focusable="false">
+        <defs><path id="hud-orbit" d="M300 50 A250 250 0 1 1 299.9 50"/></defs>
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="300" cy="300" r="298" stroke-opacity=".35"/>
+          <circle cx="300" cy="300" r="266" stroke-opacity=".22"/>
+          <circle cx="300" cy="300" r="240" stroke-opacity=".5" stroke-dasharray="1 5"/>
+          <circle cx="300" cy="300" r="230" stroke-opacity=".22"/>
+          <g stroke-opacity=".55">${ticks.join('')}</g>
+          <g stroke-width="2">${arc(298, 312, 352)}${arc(298, 132, 172)}</g>
+        </g>
+        ${marks}
+        <text textLength="1565" lengthAdjust="spacing"><textPath href="#hud-orbit">${phrase.repeat(3)}</textPath></text>
+      </svg>`;
+    return hudCache;
+  }
+
   function heroSection() {
-    const rings = [92, 128, 164, 200, 236, 272]
-      .map((r, i) => `<circle cx="300" cy="300" r="${r}" stroke-opacity="${(0.34 - i * 0.045).toFixed(3)}" stroke-width="${i % 2 ? 1 : 1.4}" ${i % 3 === 1 ? 'stroke-dasharray="2 10"' : ''}/>`)
-      .join('');
+    const drop = MK.products.newArrivals(1)[0];
     return `
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero dark-scope" aria-labelledby="hero-title">
+        <div class="hero__grid" aria-hidden="true"></div>
         <div class="container hero__inner">
           <div class="hero__content">
-            <p class="eyebrow" data-hero-in style="--d:0">Infinite Series · Coleção 2026</p>
+            <p class="eyebrow" data-hero-in style="--d:0">Infinite Series — Coleção 2026</p>
             <h1 class="display hero__title" id="hero-title" data-hero-in style="--d:1">
-              <span>BEYOND</span><span>EVERY</span><span class="gradient-text">LIMIT.</span>
+              <span>BEYOND</span><span>EVERY</span><span class="hero__title-accent">LIMIT.</span>
             </h1>
             <p class="lead hero__lead" data-hero-in style="--d:2">
-              Tecnologia, moda e lifestyle desenhados para quem enxerga além do comum.
-              Design minimalista, materiais premium e uma experiência sem limites.
+              Tecnologia, moda e lifestyle com precisão de engenharia.
+              Peças essenciais, materiais premium e uma experiência pensada
+              para quem enxerga além do comum.
             </p>
             <div class="hero__actions" data-hero-in style="--d:3">
               <a class="btn btn--primary btn--lg" href="#/catalogo">Explorar coleção ${icon('arrow-right', 'btn__arrow')}</a>
-              <a class="btn btn--secondary btn--lg" href="#/catalogo?new=1">${icon('sparkles')}Ver lançamentos</a>
+              <a class="btn btn--secondary btn--lg" href="#/catalogo?new=1">Ver lançamentos</a>
             </div>
-            <ul class="hero__perks" data-hero-in style="--d:4">
-              <li>${icon('truck')}<span><strong>Frete grátis</strong><small>acima de R$ 299</small></span></li>
-              <li>${icon('zap')}<span><strong>5% OFF no PIX</strong><small>pagamento simulado</small></span></li>
-              <li>${icon('refresh')}<span><strong>Troca em 30 dias</strong><small>sem burocracia</small></span></li>
-            </ul>
+            <dl class="hero__specs" data-hero-in style="--d:4">
+              <div><dt>Frete</dt><dd>Grátis acima de R$ 299</dd></div>
+              <div><dt>PIX</dt><dd>5% de desconto</dd></div>
+              <div><dt>Trocas</dt><dd>Até 30 dias</dd></div>
+            </dl>
           </div>
 
-          <div class="hero__visual" aria-hidden="true" data-parallax>
-            <div class="hero__layer" data-depth="12">
-              <svg class="void-rings" viewBox="0 0 600 600">
-                <g class="ring-spin">${rings}</g>
-                <g class="ring-spin ring-spin--rev"><circle cx="300" cy="300" r="290" stroke-opacity=".18" stroke-dasharray="1 14" stroke-width="2"/></g>
-              </svg>
-            </div>
-            <div class="void-core"></div>
-            <div class="hero__layer" data-depth="20">
-              <svg class="infinity-orbit" viewBox="0 0 600 300">
-                <defs>
-                  <linearGradient id="hero-light" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0" stop-color="#60A5FA"/>
-                    <stop offset="1" stop-color="#A78BFA"/>
-                  </linearGradient>
-                </defs>
-                <path class="infinity-orbit__track" d="${ORBIT_PATH}" pathLength="1000"/>
-                <path class="infinity-orbit__light" d="${ORBIT_PATH}" pathLength="1000"/>
-              </svg>
-            </div>
-            <div class="hero__layer" data-depth="34">
-              <div class="hero__product">
-                <img src="assets/images/products/halo-x.svg" alt="" width="800" height="800" fetchpriority="high">
+          <div class="hero__visual" aria-hidden="true" data-eye>
+            <div class="eye" data-hero-in style="--d:2">
+              ${eyeHUD()}
+              <div class="eye__ball" data-eye-ball>
+                <img class="eye__iris" src="assets/images/six-eyes-iris.svg" alt="" width="800" height="800" fetchpriority="high">
+                <span class="eye__pupil" data-eye-pupil></span>
+                <span class="eye__shine eye__shine--a"></span>
+                <span class="eye__shine eye__shine--b"></span>
               </div>
             </div>
-            <div class="hero__chip hero__chip--a">
-              <span class="hero__chip-icon">${icon('infinity')}</span>
-              <span><strong>Halo X</strong>Cancelamento de ruído adaptativo</span>
-            </div>
-            <div class="hero__chip hero__chip--b">
-              <span class="hero__chip-icon">${icon('zap')}</span>
-              <span><strong>40 h de bateria</strong>Áudio espacial · Bluetooth 5.4</span>
-            </div>
+            <p class="hero__tag hero__tag--a"><span class="jp" lang="ja">六眼</span>Six Eyes · <strong>Ocular 01</strong></p>
+            <p class="hero__tag hero__tag--b">Foco <strong data-eye-coords>+0.00 / +0.00</strong></p>
+            <p class="hero__vertical jp" lang="ja">すべての限界を超えて</p>
           </div>
         </div>
+        ${drop ? `
+        <a class="hero__drop" href="#/produto/${encodeURIComponent(drop.id)}" data-hero-in style="--d:5">
+          <img src="${esc(drop.image)}" alt="" width="54" height="54">
+          <span>Novo drop<strong>${esc(drop.name)}</strong></span>
+          ${icon('arrow-right')}
+        </a>` : ''}
+        <p class="hero__scroll" aria-hidden="true">Role para explorar</p>
       </section>`;
+  }
+
+  /**
+   * O olho acompanha o ponteiro (íris desloca pouco, pupila mais) e, parado,
+   * faz pequenos movimentos sacádicos. Desligado com "reduzir movimento".
+   */
+  function mountEye(root) {
+    const stage = $('[data-eye]', root);
+    if (!stage || MK.utils.prefersReducedMotion()) return null;
+    const ball = $('[data-eye-ball]', stage);
+    const pupil = $('[data-eye-pupil]', stage);
+    const coords = $('[data-eye-coords]', root);
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    let frame = 0;
+    let timer = 0;
+    let lastMove = 0;
+    let visible = true;
+
+    const fmt = (n) => `${n < 0 ? '−' : '+'}${Math.abs(n).toFixed(2)}`;
+    const look = (nx, ny, focus) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const size = ball.offsetWidth || 1;
+        ball.style.setProperty('--ex', `${(nx * size * 0.035).toFixed(1)}px`);
+        ball.style.setProperty('--ey', `${(ny * size * 0.035).toFixed(1)}px`);
+        pupil.style.setProperty('--px', `${(nx * size * 0.12).toFixed(1)}px`);
+        pupil.style.setProperty('--py', `${(ny * size * 0.12).toFixed(1)}px`);
+        pupil.style.setProperty('--ps', focus ? '0.78' : '1');
+        if (coords) coords.textContent = `${fmt(nx)} / ${fmt(-ny)}`;
+      });
+    };
+
+    const onMove = (event) => {
+      if (!visible) return;
+      lastMove = Date.now();
+      const r = ball.getBoundingClientRect();
+      const dx = event.clientX - (r.left + r.width / 2);
+      const dy = event.clientY - (r.top + r.height / 2);
+      const dist = Math.hypot(dx, dy);
+      const k = Math.min(1, dist / (Math.max(window.innerWidth, window.innerHeight) * 0.55));
+      const angle = Math.atan2(dy, dx);
+      look(Math.cos(angle) * k, Math.sin(angle) * k, dist < r.width / 2);
+    };
+
+    const saccade = () => {
+      timer = setTimeout(() => {
+        if (visible && Date.now() - lastMove > 2600) {
+          const angle = Math.random() * Math.PI * 2;
+          const k = 0.15 + Math.random() * 0.55;
+          look(Math.cos(angle) * k, Math.sin(angle) * k * 0.6, false);
+        }
+        saccade();
+      }, 1800 + Math.random() * 2400);
+    };
+
+    const observer = 'IntersectionObserver' in window
+      ? new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; })
+      : null;
+    if (observer) observer.observe(stage);
+    if (finePointer) window.addEventListener('pointermove', onMove, { passive: true });
+    saccade();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+      if (observer) observer.disconnect();
+      window.removeEventListener('pointermove', onMove);
+    };
   }
 
   /** Faixa com rolagem infinita (o conceito de infinito em movimento). */
   function marquee() {
     const items = [
-      ['infinity', 'Beyond every limit.'],
-      ['truck', 'Frete grátis acima de R$ 299'],
-      ['zap', '5% OFF no PIX'],
-      ['card', 'Até 10x sem juros'],
-      ['refresh', 'Troca grátis em 30 dias'],
-      ['sparkles', 'Infinite Series 2026'],
-      ['shield', 'Garantia MUKEN de até 2 anos'],
+      'Beyond every limit',
+      'Frete grátis acima de R$ 299',
+      '5% OFF no PIX',
+      'Até 10x sem juros',
+      'Troca grátis em 30 dias',
+      'Infinite Series 2026',
+      'Garantia de até 2 anos',
     ];
     const group = (hidden) => `
       <ul class="marquee__group" ${hidden ? 'aria-hidden="true"' : ''}>
-        ${items.map(([ic, text]) => `<li class="marquee__item">${icon(ic)}${text}</li>`).join('')}
+        ${items.map((text) => `<li class="marquee__item">${text}</li>`).join('')}
       </ul>`;
     return `
       <section class="marquee" aria-label="Benefícios MUKEN">
@@ -127,11 +229,12 @@
   /* ==================================================================
      INÍCIO — SEÇÕES DE PRODUTOS
      ================================================================== */
-  function sectionHead({ eyebrow, title, id, text = '', link = '' }) {
+  /** Cabeçalho editorial: linha fina, índice numerado e rótulo técnico. */
+  function sectionHead({ index, label, title, id, text = '', link = '' }) {
     return `
       <div class="section-head">
+        <p class="section-head__meta"><span class="section-head__index" aria-hidden="true">${index}</span><span>${label}</span></p>
         <div class="section-head__text">
-          <p class="eyebrow">${eyebrow}</p>
           <h2 class="h2" id="${id}">${title}</h2>
           ${text ? `<p>${text}</p>` : ''}
         </div>
@@ -143,13 +246,14 @@
     const P = MK.products;
     const cards = P.categories().map((c, i) => `
       <a class="category-card" href="#/catalogo?cat=${c.id}" data-reveal style="--i:${i}">
-        <span class="category-card__index" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+        <span class="category-card__top">
+          <span class="category-card__index">${String(i + 1).padStart(2, '0')}</span>
+          <span>${MK.utils.pluralize(P.countByCategory(c.id), 'produto', 'produtos')}</span>
+        </span>
         <span class="category-card__media"><img src="${esc(c.cover)}" alt="" width="800" height="800" loading="lazy"></span>
         <span class="category-card__body">
-          <span class="category-card__icon">${icon(c.icon)}</span>
           <span class="category-card__name">${esc(c.name)}</span>
           <span class="category-card__tagline">${esc(c.tagline)}</span>
-          <span class="category-card__count">${MK.utils.pluralize(P.countByCategory(c.id), 'produto', 'produtos')}</span>
         </span>
         <span class="category-card__arrow" aria-hidden="true">${icon('arrow-up-right')}</span>
       </a>`).join('');
@@ -157,8 +261,9 @@
       <section class="section" aria-labelledby="home-categories">
         <div class="container">
           ${sectionHead({
-            eyebrow: 'Explore',
-            title: 'Quatro universos, <span class="gradient-text">infinitas possibilidades</span>',
+            index: '01',
+            label: 'Categorias',
+            title: 'Quatro universos.',
             id: 'home-categories',
             text: 'Do áudio imersivo ao streetwear técnico: escolha por onde começar.',
             link: `<a class="btn btn--secondary" href="#/catalogo">Ver catálogo completo ${icon('arrow-right', 'btn__arrow')}</a>`,
@@ -177,11 +282,12 @@
       <section class="section section--alt" aria-labelledby="home-featured">
         <div class="container">
           ${sectionHead({
-            eyebrow: 'Destaques',
-            title: 'Ícones da coleção',
+            index: '02',
+            label: 'Destaques',
+            title: 'Ícones da coleção.',
             id: 'home-featured',
-            text: 'Um destaque de cada universo MUKEN, escolhido pela nossa curadoria.',
-            link: `<a class="btn btn--ghost" href="#/catalogo">Ver todos ${icon('arrow-right', 'btn__arrow')}</a>`,
+            text: 'Um destaque de cada universo MUKEN, escolhido pela curadoria.',
+            link: `<a class="btn btn--secondary" href="#/catalogo">Ver todos ${icon('arrow-right', 'btn__arrow')}</a>`,
           })}
           <div class="product-grid" data-home-featured aria-busy="${!loaded}">${loaded ? featuredInner() : MK.ui.skeletonCards(4)}</div>
         </div>
@@ -198,37 +304,43 @@
     return end;
   }
 
+  /** Promoção da semana — "Vazio Ilimitado" (無量空処). */
   function promoSection() {
     const P = MK.products;
-    const maxOff = Math.max(...P.onSale().map((p) => P.discountPercent(p)));
+    const onSale = P.onSale().slice().sort((a, b) => P.discountPercent(b) - P.discountPercent(a));
+    const top = onSale[0];
+    const maxOff = top ? P.discountPercent(top) : 0;
     return `
-      <section class="section section--tight" aria-labelledby="home-promo">
-        <div class="container">
-          <div class="promo" data-reveal>
-            <div class="promo__glow" aria-hidden="true"></div>
-            <div class="promo__content">
-              <p class="eyebrow promo__eyebrow">Infinite Week · Oferta da semana</p>
-              <h2 class="h2 promo__title" id="home-promo">Até ${maxOff}% OFF<br>+ 10% extra com cupom</h2>
-              <p class="promo__text">Peças selecionadas com preços especiais. Use o cupom abaixo no carrinho e aproveite antes que o tempo acabe.</p>
-              <div class="promo__coupon">
-                <span class="promo__coupon-label">Cupom</span>
-                <code class="promo__code">MUKEN10</code>
-                <button class="btn btn--sm promo__copy" type="button" data-action="copy" data-copy="MUKEN10" data-copy-label="Cupom MUKEN10 copiado. Cole no carrinho para aplicar.">${icon('copy')}Copiar</button>
-              </div>
-              <div class="countdown" data-countdown role="timer" aria-label="Tempo restante da oferta">
-                <div class="countdown__unit"><span class="countdown__value" data-unit="d">00</span><span class="countdown__label">Dias</span></div>
-                <div class="countdown__unit"><span class="countdown__value" data-unit="h">00</span><span class="countdown__label">Horas</span></div>
-                <div class="countdown__unit"><span class="countdown__value" data-unit="m">00</span><span class="countdown__label">Min</span></div>
-                <div class="countdown__unit"><span class="countdown__value" data-unit="s">00</span><span class="countdown__label">Seg</span></div>
-              </div>
-              <a class="btn btn--light btn--lg" href="#/catalogo?promo=1">Ver todas as ofertas ${icon('arrow-right', 'btn__arrow')}</a>
+      <section class="void dark-scope" aria-labelledby="home-promo">
+        <div class="void__stars" aria-hidden="true"></div>
+        <div class="void__orb" aria-hidden="true"></div>
+        <p class="void__kanji jp" lang="ja" aria-hidden="true">無量空処</p>
+        <div class="container void__inner">
+          <div class="void__content" data-reveal>
+            <p class="eyebrow">03 — Infinite Week · Vazio Ilimitado</p>
+            <h2 class="display void__title" id="home-promo">Até ${maxOff}% OFF.<br><span class="outline-text">+10% extra.</span></h2>
+            <p class="lead">Peças selecionadas com preço especial e mais 10% de desconto com o cupom abaixo. A oferta se renova todo domingo, às 23h59.</p>
+            <div class="void__coupon">
+              <span class="label">Cupom</span>
+              <code>MUKEN10</code>
+              <button class="btn btn--primary btn--sm" type="button" data-action="copy" data-copy="MUKEN10" data-copy-label="Cupom MUKEN10 copiado. Cole no carrinho para aplicar.">${icon('copy')}Copiar</button>
             </div>
-            <div class="promo__visual" aria-hidden="true">
-              <div class="promo__ring"></div>
-              <img class="promo__img promo__img--a" src="assets/images/products/aurora-lamp.svg" alt="" width="800" height="800" loading="lazy">
-              <img class="promo__img promo__img--b" src="assets/images/products/iris-shades.svg" alt="" width="800" height="800" loading="lazy">
+            <div class="countdown" data-countdown role="timer" aria-label="Tempo restante da oferta">
+              <div class="countdown__unit"><span class="countdown__value" data-unit="d">00</span><span class="countdown__label">Dias</span></div>
+              <div class="countdown__unit"><span class="countdown__value" data-unit="h">00</span><span class="countdown__label">Horas</span></div>
+              <div class="countdown__unit"><span class="countdown__value" data-unit="m">00</span><span class="countdown__label">Min</span></div>
+              <div class="countdown__unit"><span class="countdown__value" data-unit="s">00</span><span class="countdown__label">Seg</span></div>
             </div>
+            <a class="btn btn--secondary btn--lg" href="#/catalogo?promo=1">Ver todas as ofertas ${icon('arrow-right', 'btn__arrow')}</a>
           </div>
+          ${top ? `
+          <figure class="void__visual" data-reveal style="--i:2">
+            <img src="${esc(top.image)}" alt="" width="800" height="800" loading="lazy">
+            <figcaption class="void__caption">
+              <span>${esc(top.name)}</span>
+              <span class="void__caption-off">−${maxOff}%</span>
+            </figcaption>
+          </figure>` : ''}
         </div>
       </section>`;
   }
@@ -259,10 +371,11 @@
       <section class="section" aria-labelledby="home-launches">
         <div class="container">
           ${sectionHead({
-            eyebrow: 'Lançamentos',
-            title: 'Acabou de chegar',
+            index: '04',
+            label: 'Lançamentos',
+            title: 'Acabou de chegar.',
             id: 'home-launches',
-            text: 'As novidades mais recentes da Infinite Series, ordenadas por data de lançamento.',
+            text: 'As novidades mais recentes da Infinite Series, por data de lançamento.',
             link: `<div class="carousel__controls">
                      <button class="icon-btn carousel__btn" type="button" data-carousel-prev aria-label="Lançamentos anteriores" aria-controls="launches-track">${icon('chevron-left')}</button>
                      <button class="icon-btn carousel__btn" type="button" data-carousel-next aria-label="Próximos lançamentos" aria-controls="launches-track">${icon('chevron-right')}</button>
@@ -333,11 +446,12 @@
       <section class="section section--alt" aria-labelledby="home-bestsellers">
         <div class="container">
           ${sectionHead({
-            eyebrow: 'Mais vendidos',
-            title: 'Os favoritos de quem vai além',
+            index: '05',
+            label: 'Mais vendidos',
+            title: 'Os mais desejados.',
             id: 'home-bestsellers',
-            text: 'Ranking atualizado com base nas unidades vendidas da coleção.',
-            link: `<a class="btn btn--ghost" href="#/catalogo?sort=bestsellers">Ver ranking completo ${icon('arrow-right', 'btn__arrow')}</a>`,
+            text: 'Ranking calculado a partir das unidades vendidas da coleção.',
+            link: `<a class="btn btn--secondary" href="#/catalogo?sort=bestsellers">Ranking completo ${icon('arrow-right', 'btn__arrow')}</a>`,
           })}
           <div class="bestsellers" data-home-bestsellers aria-busy="${!loaded}">
             ${loaded ? bestsellersInner() : `<div class="skeleton spotlight-skeleton"></div><div class="ranking">${'<div class="skeleton row-skeleton"></div>'.repeat(4)}</div>`}
@@ -349,27 +463,31 @@
   function manifestoSection() {
     const P = MK.products;
     const avg = P.all().reduce((sum, p) => sum + p.rating, 0) / P.all().length;
+    // Pilares da marca, cada um ligado a um conceito do Infinito
     const pillars = [
-      ['infinity', 'Design atemporal', 'Formas essenciais que não envelhecem. Cada peça é desenhada para durar muito além das tendências.'],
-      ['eye', 'Atenção aos detalhes', 'Da costura reforçada ao alumínio usinado: tudo o que você vê — e o que não vê — é pensado com precisão.'],
-      ['zap', 'Tecnologia invisível', 'Recursos avançados que simplificam a rotina sem ruído visual. A tecnologia serve, não aparece.'],
+      ['無限', 'Infinito', 'Design atemporal: formas essenciais que não envelhecem e foram feitas para durar muito além das tendências.'],
+      ['六眼', 'Precisão', 'Da costura reforçada ao alumínio usinado, tudo o que você vê — e o que não vê — é pensado nos detalhes.'],
+      ['蒼', 'Energia', 'Tecnologia invisível: recursos avançados que simplificam a rotina sem ruído visual.'],
     ];
     return `
       <section class="section manifesto" aria-labelledby="home-manifesto">
-        <div class="container manifesto__inner">
-          <div class="manifesto__text" data-reveal>
-            <p class="eyebrow">Manifesto MUKEN</p>
-            <h2 class="h2" id="home-manifesto">Não acreditamos em limites. Acreditamos em <span class="gradient-text">profundidade.</span></h2>
-            <p class="lead">A MUKEN nasce da ideia de infinito: a busca contínua por produtos melhores, mais bonitos e mais duradouros.</p>
-            <a class="btn btn--secondary" href="#/sobre">Conheça a marca ${icon('arrow-right', 'btn__arrow')}</a>
-          </div>
-          <div class="manifesto__pillars">
-            ${pillars.map(([ic, title, text], i) => `
-              <article class="pillar" data-reveal style="--i:${i}">
-                <span class="pillar__icon">${icon(ic)}</span>
-                <h3 class="pillar__title">${title}</h3>
-                <p class="pillar__text">${text}</p>
-              </article>`).join('')}
+        <p class="manifesto__kanji jp" lang="ja" aria-hidden="true">無限</p>
+        <div class="container">
+          <div class="manifesto__inner">
+            <div class="manifesto__text" data-reveal>
+              <p class="eyebrow">06 — Manifesto MUKEN</p>
+              <h2 class="h2 manifesto__title" id="home-manifesto">Não acreditamos em limites. Acreditamos em <span class="gradient-text">profundidade.</span></h2>
+              <p class="lead">A MUKEN nasce da ideia de infinito: a busca contínua por produtos melhores, mais bonitos e mais duradouros.</p>
+              <a class="btn btn--secondary" href="#/sobre">Conheça a marca ${icon('arrow-right', 'btn__arrow')}</a>
+            </div>
+            <ol class="manifesto__pillars">
+              ${pillars.map(([kanji, title, text], i) => `
+                <li class="pillar" data-reveal style="--i:${i}">
+                  <span class="pillar__kanji jp" lang="ja" aria-hidden="true">${kanji}</span>
+                  <h3 class="pillar__title">${title}</h3>
+                  <p class="pillar__text">${text}</p>
+                </li>`).join('')}
+            </ol>
           </div>
           <dl class="stats" data-reveal>
             <div class="stats__item"><dt>Avaliação média</dt><dd>${formatRating(avg)}<span>/5</span></dd></div>
@@ -388,45 +506,15 @@
       <section class="section section--tight" aria-labelledby="home-recent">
         <div class="container">
           ${sectionHead({
-            eyebrow: 'Continue de onde parou',
-            title: 'Vistos recentemente',
+            index: '—',
+            label: 'Continue de onde parou',
+            title: 'Vistos recentemente.',
             id: 'home-recent',
             link: `<button class="btn btn--ghost" type="button" data-clear-recent>${icon('trash')}Limpar histórico</button>`,
           })}
           <div class="product-grid">${items.map((p, i) => MK.ui.productCard(p, { index: i })).join('')}</div>
         </div>
       </section>`;
-  }
-
-  /** Efeito de profundidade: camadas do hero acompanham o ponteiro. */
-  function mountParallax(root) {
-    const visual = root.querySelector('[data-parallax]');
-    if (!visual || MK.utils.prefersReducedMotion() || !window.matchMedia('(pointer: fine)').matches) return null;
-    const layers = Array.from(visual.querySelectorAll('[data-depth]'));
-    const hero = root.querySelector('.hero');
-    let frame = null;
-
-    const onMove = (event) => {
-      const rect = hero.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        layers.forEach((layer) => {
-          const depth = Number(layer.dataset.depth);
-          layer.style.transform = `translate3d(${(-x * depth).toFixed(1)}px, ${(-y * depth).toFixed(1)}px, 0)`;
-        });
-      });
-    };
-    const onLeave = () => layers.forEach((layer) => { layer.style.transform = ''; });
-
-    hero.addEventListener('pointermove', onMove);
-    hero.addEventListener('pointerleave', onLeave);
-    return () => {
-      cancelAnimationFrame(frame);
-      hero.removeEventListener('pointermove', onMove);
-      hero.removeEventListener('pointerleave', onLeave);
-    };
   }
 
   MK.views.home = {
@@ -446,7 +534,7 @@
     },
     mount(root) {
       const carousel = mountCarousel(root);
-      const cleanups = [mountParallax(root), mountCountdown(root), carousel && carousel.cleanup];
+      const cleanups = [mountEye(root), mountCountdown(root), carousel && carousel.cleanup];
       let alive = true;
 
       // Primeira visita: troca os skeletons pelos produtos após o "carregamento"
@@ -836,7 +924,7 @@
           ${productTabs(product)}
 
           <section class="section related" aria-labelledby="related-title">
-            ${sectionHead({ eyebrow: 'Combine com', title: 'Produtos relacionados', id: 'related-title', link: `<a class="btn btn--ghost" href="#/catalogo?cat=${category.id}">Mais de ${esc(category.name)} ${icon('arrow-right', 'btn__arrow')}</a>` })}
+            ${sectionHead({ index: '+', label: 'Combine com', title: 'Produtos relacionados.', id: 'related-title', link: `<a class="btn btn--ghost" href="#/catalogo?cat=${category.id}">Mais de ${esc(category.name)} ${icon('arrow-right', 'btn__arrow')}</a>` })}
             <div class="product-grid">${related.map((p, i) => MK.ui.productCard(p, { index: i })).join('')}</div>
           </section>
         </section>`;
@@ -932,12 +1020,12 @@
      ================================================================== */
   const PALETTE = [
     ['Preto profundo', '#080A12', 'Fundo principal — o “vazio” que dá profundidade.'],
-    ['Azul marinho', '#10182B', 'Superfícies e cards.'],
+    ['Azul marinho', '#10182B', 'Superfícies elevadas: menus, gavetas e modais.'],
     ['Azul elétrico', '#2563EB', 'Cor principal de ação e destaque.'],
-    ['Azul luminoso', '#60A5FA', 'Brilhos, links e detalhes de energia.'],
+    ['Azul luminoso', '#60A5FA', 'Links, foco e o brilho da íris.'],
     ['Branco gelo', '#F8FAFC', 'Textos e contrastes.'],
     ['Cinza', '#94A3B8', 'Textos secundários.'],
-    ['Roxo de destaque', '#8B5CF6', 'Acentos pontuais e gradientes.'],
+    ['Roxo de destaque', '#8B5CF6', 'Acento raro: símbolo e halo do Vazio.'],
   ];
 
   MK.views.about = {
@@ -953,13 +1041,14 @@
         ['arrow-up-right', 'Inovação', 'Experimentação constante para ir além do que já existe.'],
       ];
       const pillars = [
-        ['Infinito', 'O símbolo da marca é um infinito entrelaçado: uma linha contínua que passa por trás de si mesma e cria profundidade real.'],
-        ['Visão', 'O azul elétrico e o azul luminoso traduzem o olhar atento que enxerga além — brilhos, contornos de luz e foco.'],
-        ['Vazio', 'Fundos quase pretos, anéis concêntricos e gradientes sutis criam a sensação de um espaço ilimitado.'],
-        ['Energia', 'Movimento contínuo: a luz que percorre o infinito no hero, a faixa sem fim e as microinterações.'],
+        ['無限', 'Infinito', 'O símbolo da marca é um infinito entrelaçado: uma linha contínua que passa por trás de si mesma e cria profundidade real.'],
+        ['六眼', 'Visão', 'O olhar que enxerga além: no início do site, uma íris original em azul elétrico acompanha o movimento do cursor.'],
+        ['空', 'Vazio', 'Fundos quase pretos, anéis técnicos e um campo de estrelas criam a sensação de um espaço ilimitado.'],
+        ['蒼', 'Energia', 'Movimento contínuo e preciso: a faixa sem fim, a contagem regressiva e as microinterações.'],
       ];
       return `
         <section class="about-hero">
+          <p class="about-hero__kanji jp" lang="ja" aria-hidden="true">無限</p>
           <div class="container about-hero__inner">
             <nav class="breadcrumb" aria-label="Você está em"><ol><li><a href="#/">Início</a></li><li><span aria-current="page">Sobre</span></li></ol></nav>
             <p class="eyebrow">Sobre a MUKEN</p>
@@ -975,12 +1064,12 @@
               <h2 class="h2">MUKEN significa infinito.</h2>
               <p>O nome nasce do conceito de <strong>infinito</strong> — uma ideia celebrada pela cultura pop japonesa contemporânea, em que o infinito aparece como uma barreira impossível de atravessar e, ao mesmo tempo, como um poder sem limites.</p>
               <p>Transformamos essa referência em uma identidade <strong>totalmente original</strong>: em vez de personagens ou símbolos existentes, usamos quatro conceitos — infinito, visão, vazio e energia — como base para cores, formas, movimento e linguagem.</p>
-              <p class="about-slogan">BEYOND EVERY LIMIT.</p>
+              <p class="about-slogan">BEYOND EVERY LIMIT.<span class="jp" lang="ja">すべての限界を超えて</span></p>
             </div>
             <div class="about-pillars">
-              ${pillars.map(([title, text], i) => `
+              ${pillars.map(([kanji, title, text], i) => `
                 <article class="about-pillar" data-reveal style="--i:${i}">
-                  <span class="about-pillar__num">0${i + 1}</span>
+                  <div class="about-pillar__top" aria-hidden="true"><span class="about-pillar__kanji jp" lang="ja">${kanji}</span><span>0${i + 1}</span></div>
                   <h3 class="about-pillar__title">${title}</h3>
                   <p>${text}</p>
                 </article>`).join('')}
@@ -990,7 +1079,7 @@
 
         <section class="section section--alt" aria-labelledby="about-values">
           <div class="container">
-            ${sectionHead({ eyebrow: 'Personalidade', title: 'Os valores que guiam cada produto', id: 'about-values' })}
+            ${sectionHead({ index: '02', label: 'Personalidade', title: 'Os valores que guiam cada produto.', id: 'about-values' })}
             <div class="values-grid">
               ${values.map(([ic, title, text], i) => `
                 <article class="value-card" data-reveal style="--i:${i}">
@@ -998,13 +1087,17 @@
                   <h3 class="value-card__title">${title}</h3>
                   <p>${text}</p>
                 </article>`).join('')}
+              <div class="value-card value-card--brand" data-reveal style="--i:7">
+                <span class="jp" lang="ja" aria-hidden="true">無限</span>
+                <p><strong>BEYOND EVERY LIMIT.</strong>Sete valores, uma direção.</p>
+              </div>
             </div>
           </div>
         </section>
 
         <section class="section" aria-labelledby="about-identity">
           <div class="container">
-            ${sectionHead({ eyebrow: 'Identidade visual', title: 'Um sistema visual próprio', id: 'about-identity', text: 'Logotipo, paleta e tipografia criados para a MUKEN. Clique em uma cor para copiar o código.' })}
+            ${sectionHead({ index: '03', label: 'Identidade visual', title: 'Um sistema visual próprio.', id: 'about-identity', text: 'Logotipo, paleta e tipografia criados para a MUKEN. Clique em uma cor para copiar o código.' })}
             <div class="brand-board">
               <figure class="brand-tile brand-tile--dark" data-reveal>
                 <img src="assets/logo/muken-logo-horizontal-dark.svg" alt="Logotipo horizontal da MUKEN para fundos escuros" width="437" height="56">
@@ -1035,8 +1128,10 @@
                 </li>`).join('')}
             </ul>
             <div class="type-specimen" data-reveal>
-              <div><p class="type-specimen__label">Títulos · Unbounded</p><p class="type-specimen__display">Aa Infinito 2026</p></div>
+              <div><p class="type-specimen__label">Títulos · Archivo Expanded</p><p class="type-specimen__display">Beyond 2026</p></div>
               <div><p class="type-specimen__label">Textos e interface · Inter</p><p class="type-specimen__body">Tecnologia, moda e lifestyle com legibilidade em qualquer tela. 0123456789</p></div>
+              <div><p class="type-specimen__label">Dados técnicos · JetBrains Mono</p><p class="type-specimen__mono">MK-TEC-001 · R$ 1.599,00 · 40 h</p></div>
+              <div><p class="type-specimen__label">Elementos gráficos · Noto Sans JP</p><p class="type-specimen__jp"><span lang="ja">無限 六眼 蒼</span><small>Infinito · Seis Olhos · Azul</small></p></div>
             </div>
           </div>
         </section>

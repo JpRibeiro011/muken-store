@@ -29,8 +29,9 @@
 
   <!--
     Aplica o tema salvo ANTES da renderização (evita o "flash" de tema errado).
-    O tema escuro é o padrão da MUKEN. O manifesto só é anexado em http(s),
-    pois navegadores bloqueiam manifestos abertos via file://.
+    O tema escuro é o padrão da MUKEN. O manifesto e o pré-carregamento das
+    fontes usadas acima da dobra só são anexados em http(s): via file:// o
+    navegador bloqueia essas requisições (CORS) e registra erros no console.
   -->
   <script>
     (function () {
@@ -45,6 +46,15 @@
         link.rel = 'manifest';
         link.href = 'site.webmanifest';
         document.head.appendChild(link);
+        ['archivo-latin-var', 'inter-latin-var'].forEach(function (name) {
+          var font = document.createElement('link');
+          font.rel = 'preload';
+          font.as = 'font';
+          font.type = 'font/woff2';
+          font.crossOrigin = 'anonymous';
+          font.href = 'assets/fonts/' + name + '.woff2';
+          document.head.appendChild(font);
+        });
       }
     })();
   </script>
@@ -131,6 +141,17 @@
 
   <!-- Camada de ambiência (gradientes de profundidade) -->
   <div class="ambient" aria-hidden="true"></div>
+
+  <!-- Barra de avisos (rola com a página; o cabeçalho abaixo fica fixo) -->
+  <div class="announcement">
+    <div class="container announcement__inner">
+      <p>Frete grátis acima de R$ 299</p>
+      <span class="announcement__sep announcement__extra" lang="ja" aria-hidden="true">無限</span>
+      <p class="announcement__extra">Cupom MUKEN10: 10% OFF</p>
+      <span class="announcement__sep announcement__extra" lang="ja" aria-hidden="true">無限</span>
+      <p class="announcement__extra">Loja conceitual · pagamentos simulados</p>
+    </div>
+  </div>
 
   <!-- =========================================================
        CABEÇALHO
@@ -231,7 +252,7 @@
               <use href="#logo-wordmark" x="282.41" y="6" width="592" height="100"/>
             </svg>
           </a>
-          <p class="footer-slogan">BEYOND EVERY LIMIT.</p>
+          <p class="footer-slogan">BEYOND EVERY LIMIT.<span class="jp" lang="ja">すべての限界を超えて</span></p>
           <p class="footer-text">Tecnologia, moda e lifestyle com design minimalista para quem enxerga além do comum.</p>
           <ul class="social-list" aria-label="Redes sociais (perfis fictícios)">
             <li><button type="button" class="icon-btn icon-btn--ghost" data-action="social" data-network="Instagram" aria-label="Instagram da MUKEN (fictício)"><svg class="icon" aria-hidden="true"><use href="#i-camera"/></svg></button></li>
@@ -294,6 +315,9 @@
         <p>© <span data-year>2026</span> MUKEN STORE. Loja conceitual — projeto acadêmico. Nenhuma venda, cobrança ou entrega real é realizada.</p>
         <button class="footer-top-link" type="button" data-action="scroll-top">Voltar ao topo <svg class="icon icon--sm" aria-hidden="true"><use href="#i-arrow-up"/></svg></button>
       </div>
+
+      <!-- Logotipo em escala monumental, como assinatura do rodapé -->
+      <svg class="footer-wordmark" viewBox="0 0 592 100" aria-hidden="true" focusable="false"><use href="#logo-wordmark"/></svg>
     </div>
   </footer>
 

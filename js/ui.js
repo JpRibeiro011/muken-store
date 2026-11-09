@@ -63,7 +63,7 @@
     const a = P.availability(product);
     if (a.code === 'out') list.push('<span class="badge badge--out">Esgotado</span>');
     if (P.hasPromo(product) && a.code !== 'out') list.push(`<span class="badge badge--sale">-${P.discountPercent(product)}%</span>`);
-    if (product.isNew) list.push(`<span class="badge badge--new">${icon('sparkles')}Novo</span>`);
+    if (product.isNew) list.push('<span class="badge badge--new">Novo</span>');
     if (a.code === 'low') list.push(`<span class="badge badge--low">Últimas ${a.stock}</span>`);
     return list.join('');
   }
@@ -78,6 +78,16 @@
       </button>`;
   }
 
+  /** Nota compacta (estrela + número), usada nos cards da vitrine. */
+  function ratingCompact(product) {
+    return `
+      <p class="product-card__rating">
+        <span class="sr-only">Avaliação</span>${icon('star', 'icon--fill')}
+        <span>${formatRating(product.rating)}</span><span class="sr-only"> de 5, ${product.reviewsCount} avaliações</span>
+        <span class="product-card__reviews" aria-hidden="true">(${product.reviewsCount})</span>
+      </p>`;
+  }
+
   /** Card de produto usado em todas as vitrines. */
   function productCard(product, options = {}) {
     const P = MK.products;
@@ -88,6 +98,7 @@
     return `
       <article class="product-card ${out ? 'is-out' : ''}" data-reveal style="--i:${index % 8}" data-product-id="${esc(product.id)}">
         <div class="product-card__media media-loading">
+          <span class="product-card__ref" aria-hidden="true">${esc(product.id)}</span>
           <img class="product-card__img" src="${esc(product.image)}" alt="${esc(product.imageAlt)}"
                width="800" height="800" loading="lazy" decoding="async">
           <div class="product-card__badges">${badges(product)}</div>
@@ -98,16 +109,18 @@
           </button>
         </div>
         <div class="product-card__body">
-          <p class="product-card__cat">${esc(P.categoryName(product.category))}</p>
+          <div class="product-card__meta">
+            <p class="product-card__cat">${esc(P.categoryName(product.category))}</p>
+            ${ratingCompact(product)}
+          </div>
           <h3 class="product-card__name"><a href="${url}">${esc(product.name)}</a></h3>
           <p class="product-card__sub muted small">${esc(product.subtitle)}</p>
-          ${stars(product.rating, product.reviewsCount)}
           ${price(product)}
           <div class="product-card__footer">
             ${stockTag(product)}
-            <button class="btn btn--primary btn--sm" type="button" data-action="add-to-cart" data-id="${esc(product.id)}"
+            <button class="btn btn--secondary btn--sm product-card__add" type="button" data-action="add-to-cart" data-id="${esc(product.id)}"
                     ${out ? 'disabled aria-disabled="true"' : ''} aria-label="${out ? `${esc(product.name)} esgotado` : `Adicionar ${esc(product.name)} ao carrinho`}">
-              ${icon(out ? 'x-circle' : 'bag')}<span>${out ? 'Esgotado' : 'Adicionar'}</span>
+              ${icon(out ? 'x-circle' : 'plus')}<span>${out ? 'Esgotado' : 'Adicionar'}</span>
             </button>
           </div>
         </div>
