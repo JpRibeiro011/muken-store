@@ -2,7 +2,7 @@
 
 **Projeto:** MUKEN STORE — E-commerce conceitual
 **Ferramenta de IA:** Claude Code (agente de programação da Anthropic), executado em ambiente remoto na nuvem
-**Aluno:** João Pedro Ribeiro
+**Autoria:** João Pedro Ribeiro
 **Período:** novembro de 2026
 
 ---
@@ -13,7 +13,7 @@ O desenvolvimento seguiu um fluxo real de *Vibe Coding*: um **prompt mestre** (r
 
 Por isso, em cada registro abaixo, o campo **“Prompt completo”** reproduz o **trecho exato do prompt mestre** que orientou aquela etapa. Os campos “Resumo da resposta da IA”, “Aplicação prática” e “Adaptações realizadas” descrevem o que de fato foi produzido e as decisões e correções reais, que podem ser conferidas no código e no histórico de commits do repositório.
 
-Também estão registradas as interações adicionais reais que ocorreram durante o processo (registros 12 e 13). Prompts feitos depois desta versão devem ser acrescentados na seção [Prompts adicionais](#prompts-adicionais).
+Também estão registradas as interações adicionais reais que ocorreram durante o processo (registros 12 a 15). Prompts feitos depois desta versão devem ser acrescentados na seção [Prompts adicionais](#prompts-adicionais).
 
 | # | Etapa | Commit relacionado |
 | --- | --- | --- |
@@ -30,6 +30,8 @@ Também estão registradas as interações adicionais reais que ocorreram durant
 | 11 | Documentação e publicação | `Create project documentation` / `Final adjustments and deployment` |
 | 12 | Interação: “por que parou?” | — |
 | 13 | Publicação no GitHub Pages | `Update documentation after deployment` |
+| 14 | Dados do relatório | `Update documentation after redesign` |
+| 15 | Redesign da interface | `Redesign interface with Six Eyes hero and editorial grid` |
 
 ---
 
@@ -53,7 +55,7 @@ Também estão registradas as interações adicionais reais que ocorreram durant
 - Arquitetura **SPA com roteador por hash** (`#/catalogo`, `#/produto/ID`): funciona no GitHub Pages sem configuração de servidor e mantém o `index.html` como único documento, como pede a estrutura.
 - Scripts clássicos com `defer` e um namespace global (`MK`), em vez de ES Modules, para que a loja funcione **também ao abrir o `index.html` direto do disco** (`file://`), onde módulos são bloqueados pelo navegador.
 - Além dos arquivos exigidos, foram criados `utils.js`, `ui.js`, `orders.js` e `pages.js` para não concentrar lógica demais em um só arquivo, além de `404.html` (exigido pelo GitHub Pages) e `assets/fonts/`.
-- A tentativa de criar o repositório remoto pela ferramenta de linha de comando foi **recusada pelo ambiente** (a sessão só tem acesso a repositórios já existentes). O repositório vazio precisa ser criado pelo aluno no GitHub.
+- A tentativa de criar o repositório remoto pela ferramenta de linha de comando foi **recusada pelo ambiente** (a sessão só tem acesso a repositórios já existentes). O repositório vazio precisou ser criado manualmente, pela própria conta no GitHub.
 
 ---
 
@@ -267,8 +269,8 @@ Também estão registradas as interações adicionais reais que ocorreram durant
 **Aplicação prática:** `README.md`, `docs/`; commits `Create project documentation` e `Final adjustments and deployment`.
 
 **Adaptações realizadas:**
-- Informações que dependem do aluno (instituição, curso, disciplina, professor, reflexões pessoais) ficaram marcadas como **[preencher]** no relatório.
-- A publicação exigiu ações do aluno no GitHub, pois o ambiente do agente não tem permissão para criar repositórios novos (ver registro 13).
+- Informações pessoais e acadêmicas (instituição, curso, disciplina, docente, reflexões pessoais) ficaram marcadas como **[preencher]** no relatório nesta etapa e foram preenchidas depois (registro 14).
+- A publicação exigiu ações manuais no GitHub, pela própria conta, pois o ambiente do agente não tem permissão para criar repositórios novos (ver registro 13).
 
 ---
 
@@ -292,7 +294,7 @@ Também estão registradas as interações adicionais reais que ocorreram durant
 
 **Objetivo:** colocar a loja no ar no GitHub Pages e verificar o funcionamento após a publicação.
 
-**Prompts completos (sequência real de mensagens do aluno):**
+**Prompts completos (sequência real de mensagens enviadas ao agente):**
 
 > criei o repositorio
 
@@ -309,7 +311,7 @@ Também estão registradas as interações adicionais reais que ocorreram durant
 **Resumo da resposta da IA:**
 - Com o repositório criado, o agente o conectou à sessão, mas o envio foi recusado (HTTP 403): o aplicativo do Claude no GitHub não tinha permissão para esse repositório. O agente explicou como liberar o acesso ou enviar pelo próprio computador.
 - Diante do erro do GitHub Desktop, explicou que “Publish repository” tenta criar um repositório novo e orientou a configurar o endereço remoto em *Repository settings → Remote*.
-- Como o domínio `github.io` estava bloqueado na rede do ambiente, propôs (e o aluno aprovou) um ambiente com acesso apenas a `jpribeiro011.github.io` e `viacep.com.br`.
+- Como o domínio `github.io` estava bloqueado na rede do ambiente, propôs (e a proposta foi aprovada) um ambiente com acesso apenas a `jpribeiro011.github.io` e `viacep.com.br`.
 - Diante do 404, inspecionou o repositório remoto. Os arquivos tinham sido enviados pelo upload do site do GitHub dentro de uma subpasta `muken-store/`: o `index.html` não estava na raiz e o histórico organizado tinha sido trocado por 3 commits genéricos. A loja funcionava em `/muken-store/muken-store/`.
 - Com a autorização (“pode substituir”) e a permissão do aplicativo concedida (“pronto”), substituiu o conteúdo pelo histórico original usando `git push --force-with-lease`, que só sobrescreve se o remoto ainda estiver no estado inspecionado. O site entrou no ar em cerca de 1,5 minuto.
 - Por fim, executou a suíte de testes **contra o site publicado: 47 de 47 aprovados**. Também conferiu os tipos dos arquivos servidos e a página 404 personalizada.
@@ -317,14 +319,78 @@ Também estão registradas as interações adicionais reais que ocorreram durant
 **Aplicação prática:** repositório `JpRibeiro011/muken-store` com os commits organizados; site em https://jpribeiro011.github.io/muken-store/; suíte de testes com a opção `MUKEN_URL` para testar o site publicado.
 
 **Adaptações realizadas:**
-- O envio que substituiu o conteúdo do repositório só foi feito após autorização explícita do aluno, e de forma condicionada ao estado inspecionado.
+- O envio que substituiu o conteúdo do repositório só foi feito após autorização explícita, e de forma condicionada ao estado inspecionado.
 - O relatório (seção 11) registra essas dificuldades de publicação. Os repositórios extras criados nas tentativas (`muken` e `muken-store-1`) não foram alterados pelo agente.
+
+---
+
+## 14. Dados do relatório
+
+**Objetivo:** saber o que o relatório técnico pede e preenchê-lo com os dados acadêmicos.
+
+**Prompts completos (sequência real de mensagens):**
+
+> preenche o relatorio com os meus dados, e qual é o relatorio? quais são as informaçoes que pede
+
+```text
+Instituição de ensino:  Centro Universitário de Brasília (CEUB)
+Curso: Engenharia de Software
+Disciplina: Desenvolvimento de Interfaces - Turma B - 0726 - Asa Norte - Noturno
+Professor(a): Adriana
+Cidade: Brasilia
+Data de entrega: 25/11/2026      as reflexões voce pode fazer do jeito que achar melhor, mais lembrando que tem que ser do jeito que eu falo, mais humanizado
+```
+
+**Resumo da resposta da IA:**
+- Explicou que o relatório é o arquivo `docs/relatorio.md` (item 11 do enunciado), com as 16 seções exigidas já escritas, faltando só os campos que dependiam de informações pessoais.
+- Listou o que faltava (instituição, curso, disciplina, docente, cidade, data de entrega, reflexão pessoal e, opcionalmente, dificuldades próprias) e perguntou sobre as datas de acesso das referências e sobre algum modelo de documento da disciplina.
+- Com os dados recebidos, preencheu a capa do relatório e a tabela acadêmica do README.
+- Escreveu a reflexão pessoal (seção 14) e o parágrafo “Do meu lado” (seção 11) em primeira pessoa e em tom de conversa, como pedido, a partir de fatos reais do processo: a pergunta “por que parou?”, os erros de publicação, a crítica ao visual genérico e o redesign.
+- O pedido de redesign (registro 15) chegou logo em seguida e interrompeu esta etapa, que foi concluída junto com a documentação do redesign.
+
+**Aplicação prática:** `docs/relatorio.md` (capa, seções 11, 14 e 15) e `README.md` (informações acadêmicas); commit `Update documentation after redesign`.
+
+**Adaptações realizadas:**
+- A pedido, a reflexão pessoal foi redigida pela IA com base nos acontecimentos reais do projeto, para ser revisada antes da entrega.
+- Como não houve resposta específica sobre as datas de acesso das referências, foi usada a data em que o relatório foi preenchido (7 de novembro de 2026).
+- O relatório e este histórico passaram a usar formas neutras (“autoria”, “docente”) nos trechos que antes indicavam campos a preencher.
+
+---
+
+## 15. Redesign: “achei ele muito genérico”
+
+**Objetivo:** deixar a interface com cara de produto profissional, menos genérica, mantendo a referência ao Satoru Gojo.
+
+**Prompts completos (sequência real de mensagens):**
+
+> quero que melhor o design tambem, achei ele muito generico, melhore ele para ficar melhor e mais com cara de profissional, mantendo a referencia ao satoro gojo
+
+> continue
+
+*(A mensagem “continue” foi enviada no dia seguinte, depois que a sessão atingiu o limite de uso da ferramenta.)*
+
+**Resumo da resposta da IA:**
+- **Diagnóstico:** apontou o que deixava o visual genérico: cantos arredondados, botões em pílula, degradês e brilhos em quase todo lugar, uma fonte de títulos arredondada (Unbounded) e um hero de “produto sobre anéis”, comum em templates.
+- **Direção:** propôs uma linguagem de luxo técnico com minimalismo editorial japonês, traduzindo a referência ao Gojo só em conceitos: Seis Olhos (六眼), Infinito (無限), Vazio Ilimitado (無量空処) e o azul (蒼).
+- **Sistema visual:** novas fontes hospedadas no projeto (Archivo Expanded, JetBrains Mono e um subconjunto de 11 KB da Noto Sans JP), tokens revistos, cantos de 2 px, grades de linhas finas, botões retangulares em caixa alta e selos e preços em fonte monoespaçada.
+- **Página inicial:** barra de avisos; hero com uma íris original gerada por código (SVG procedural) dentro de um anel técnico, que acompanha o cursor; seções numeradas; promoção “Vazio Ilimitado” com campo de estrelas; manifesto com pilares em japonês; e o logotipo em escala monumental no rodapé. O card de produto, a página Sobre, a 404 do GitHub Pages e a imagem de compartilhamento também foram refeitos.
+- **Validação:** testes ponta a ponta (47 de 47 no servidor local e, depois da publicação, 47 de 47 contra o site no ar), axe-core (0 violações em 13 rotas × 2 temas e com os diálogos abertos), auditoria de largura em 13 rotas × 6 larguras e revisão visual em desktop, tablet e celular. Os problemas encontrados no caminho (contraste, sobreposições, estouros e erros de CORS em `file://`) estão no relatório, seção 11, item 11.
+- **Interrupção:** a sessão atingiu o limite de uso enquanto o histórico da conversa era compactado. Com o “continue”, o trabalho foi retomado de onde parou, porque as alterações ainda não enviadas continuavam no ambiente.
+- **Verificação no ar:** depois do envio, uma captura do site publicado em 1280 px mostrou o campo de busca do cabeçalho espremido, por causa de uma regra antiga do menu. A correção foi enviada em um commit separado e o site foi testado de novo.
+
+**Aplicação prática:** `css/` (os três arquivos), `js/pages.js`, `js/ui.js`, `index.html`, `404.html`, `assets/fonts/`, `assets/images/six-eyes-iris.svg`, `assets/images/void-stars.svg`, `assets/images/og-image.png` e as 17 capturas de `docs/screenshots/`; commits `Redesign interface with Six Eyes hero and editorial grid`, `Fix header search width on notebook screens` e `Update documentation after redesign`.
+
+**Adaptações realizadas:**
+- Os seletores usados pelos testes automatizados foram mantidos, e o título do hero continua com o texto “BEYOND EVERY LIMIT.”.
+- O olho é decorativo para leitores de tela, fica parado com “reduzir movimento” e pausa quando sai da tela.
+- O hero continua escuro no tema claro, porque a íris luminosa depende do contraste com o fundo.
+- A fonte japonesa só tem os caracteres usados; trocar ou acrescentar textos em japonês exige gerar o subconjunto de novo.
 
 ---
 
 ## Prompts adicionais
 
-> Espaço para o aluno registrar novos prompts feitos após esta versão (correções, ajustes de conteúdo, publicação etc.), seguindo o mesmo modelo: **Objetivo · Prompt completo · Resumo da resposta da IA · Aplicação prática · Adaptações realizadas**.
+> Espaço para registrar novos prompts feitos após esta versão (correções, ajustes de conteúdo, publicação etc.), seguindo o mesmo modelo: **Objetivo · Prompt completo · Resumo da resposta da IA · Aplicação prática · Adaptações realizadas**.
 
 ---
 

@@ -21,7 +21,7 @@ desenvolvido com HTML5, CSS3 e JavaScript Vanilla usando a metodologia **Vibe Co
 ![LocalStorage](https://img.shields.io/badge/LocalStorage-2563EB?style=flat-square)
 ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=github&logoColor=white)
 
-<img src="docs/screenshots/01-home-hero.jpg" alt="Página inicial da MUKEN STORE com o slogan BEYOND EVERY LIMIT." width="100%">
+<img src="docs/screenshots/01-home-hero.jpg" alt="Página inicial da MUKEN STORE: slogan BEYOND EVERY LIMIT. ao lado de uma íris azul cercada por um anel técnico" width="100%">
 
 </div>
 
@@ -46,7 +46,7 @@ desenvolvido com HTML5, CSS3 e JavaScript Vanilla usando a metodologia **Vibe Co
 
 ## Sobre o projeto
 
-A **MUKEN STORE** é uma loja virtual conceitual com identidade visual própria, premium, minimalista e futurista. O nome **MUKEN** faz referência ao conceito de **infinito** presente no universo de *Jujutsu Kaisen* (associado ao personagem Satoru Gojo). Essa inspiração foi traduzida em uma identidade **totalmente original**: nenhum personagem, logotipo, imagem ou arte oficial da franquia foi utilizado.
+A **MUKEN STORE** é uma loja virtual conceitual com identidade visual própria, premium e minimalista, de linguagem editorial e técnica. O nome **MUKEN** faz referência ao conceito de **infinito** presente no universo de *Jujutsu Kaisen* (associado ao personagem Satoru Gojo). Essa inspiração foi traduzida em uma identidade **totalmente original**: nenhum personagem, logotipo, imagem ou arte oficial da franquia foi utilizado.
 
 A loja é um site estático (sem backend) e **todas as funcionalidades são reais**: catálogo, pesquisa, filtros combinados, carrinho com cálculos e controle de estoque, cupons, checkout com validação, pagamentos simulados, histórico de pedidos, favoritos e tema claro/escuro, com persistência em LocalStorage.
 
@@ -60,13 +60,14 @@ Desenvolver um e-commerce conceitual funcional, bem documentado e com aparência
 
 | Conceito | Tradução visual |
 | --- | --- |
-| **Infinito** | Símbolo de infinito entrelaçado, com um vazado real que cria profundidade |
-| **Seis Olhos / visão** | Azul elétrico e azul luminoso como cores de destaque, brilhos e contornos de luz |
-| **Vazio Ilimitado** | Fundos quase pretos, anéis concêntricos, grade em perspectiva e gradientes sutis |
-| **Energia** | Luz percorrendo o infinito no hero, faixa de rolagem infinita e microinterações |
+| **Infinito (無限)** | Símbolo de infinito entrelaçado, faixa de rolagem infinita e marca-d'água tipográfica 無限 |
+| **Seis Olhos (六眼)** | Hero com uma íris azul original, gerada por código, que acompanha o cursor; azul elétrico como cor de destaque |
+| **Vazio Ilimitado (無量空処)** | Promoção da semana sobre um campo de estrelas e um horizonte escuro com halo azul |
+| **Energia (蒼)** | Movimento contínuo e preciso: anel técnico em rotação lenta, contagem regressiva e microinterações |
 
 **Paleta:** `#080A12` preto profundo · `#10182B` azul marinho · `#2563EB` azul elétrico · `#60A5FA` azul luminoso · `#F8FAFC` branco gelo · `#94A3B8` cinza · `#8B5CF6` roxo de destaque.
-**Tipografia:** Unbounded (títulos) e Inter (textos), hospedadas no próprio projeto (licença SIL OFL).
+**Tipografia:** Archivo Expanded (títulos), Inter (textos), JetBrains Mono (rótulos técnicos e preços) e Noto Sans JP (subconjunto só com os caracteres japoneses usados), todas hospedadas no próprio projeto (licença SIL OFL).
+**Linguagem visual:** cantos retos, grades de linhas finas, seções numeradas, rótulos monoespaçados e azul reservado para ação e destaque. A referência ao Satoru Gojo aparece só em conceitos: nenhum personagem, logotipo ou arte oficial é usado.
 **Logotipo:** versões horizontais para fundo escuro e claro, símbolo isolado e favicon, em [`assets/logo/`](assets/logo) e [`assets/icons/`](assets/icons).
 
 ## Tecnologias utilizadas
@@ -77,7 +78,7 @@ Desenvolver um e-commerce conceitual funcional, bem documentado e com aparência
 | **CSS3** | Design tokens com variáveis, Grid/Flexbox, temas claro e escuro, animações, `@media` |
 | **JavaScript Vanilla** | Roteador SPA por hash, componentes, regras de negócio, validações, eventos |
 | **LocalStorage** | Carrinho, cupom, favoritos, pedidos, estoque, tema, perfil, mensagens |
-| **SVG** | Logotipo, ícones e 20 ilustrações de produtos originais |
+| **SVG** | Logotipo, ícones, 20 ilustrações de produtos, íris do hero e campo de estrelas (todos originais) |
 | **Git / GitHub** | Versionamento com commits organizados por etapa |
 | **GitHub Pages** | Hospedagem estática gratuita |
 | **Playwright + axe-core** | Testes automatizados e auditoria de acessibilidade (opcionais, fora do site) |
@@ -87,7 +88,7 @@ Nenhum framework (React, Vue, Angular etc.) foi utilizado.
 ## Funcionalidades
 
 **Loja e catálogo**
-- Página inicial com hero, faixa de benefícios infinita, categorias, destaques, oferta com contagem regressiva real, carrossel de lançamentos, ranking de mais vendidos, manifesto e “vistos recentemente”.
+- Página inicial com barra de avisos, hero “Seis Olhos” (íris interativa), faixa de benefícios infinita, categorias, destaques, promoção “Vazio Ilimitado” com contagem regressiva real, carrossel de lançamentos, ranking de mais vendidos, manifesto e “vistos recentemente”.
 - 20 produtos fictícios em 4 categorias, cada um com ID, nome, categoria, descrição, preço, preço promocional, imagem, estoque, avaliação e disponibilidade.
 - **Pesquisa** por nome sem diferenciar acentos/maiúsculas, com sugestões em tempo real (setas + Enter).
 - **Filtros simultâneos:** categoria, faixa de preço, promoção, lançamentos e disponibilidade; **ordenação** por menor preço, maior preço, A–Z, Z–A, avaliação, mais vendidos e lançamentos. O estado fica na URL (links compartilháveis).
@@ -104,15 +105,17 @@ Nenhum framework (React, Vue, Angular etc.) foi utilizado.
 
 **Experiência e extras**
 - Favoritos persistentes, tema claro/escuro (escuro é o padrão), sincronização entre abas.
-- Notificações personalizadas, animações de entrada, efeitos de profundidade (parallax), botão “voltar ao topo”.
+- Notificações personalizadas, animações de entrada, olho interativo no hero (fica parado quando o sistema pede “reduzir movimento”), botão “voltar ao topo”.
 - Páginas Sobre (identidade visual com paleta copiável), Contato (formulário validado com protocolo e FAQ), Política de Privacidade (com exclusão real dos dados do navegador) e 404.
 - Acessibilidade: navegação completa por teclado, foco gerenciado, ARIA, contraste AA nos dois temas, `prefers-reduced-motion`.
 - Responsivo de 320 px a telas grandes; funciona também abrindo o `index.html` diretamente (`file://`).
 
 ## Capturas de tela
 
-| Página inicial (tema claro) | Catálogo com filtros simultâneos |
+| Promoção “Vazio Ilimitado” | Categorias |
 | --- | --- |
+| ![Promoção Vazio Ilimitado](docs/screenshots/17-promocao-vazio-ilimitado.jpg) | ![Categorias](docs/screenshots/03-home-categorias.jpg) |
+| **Página inicial (tema claro)** | **Catálogo com filtros simultâneos** |
 | ![Tema claro](docs/screenshots/02-home-tema-claro.jpg) | ![Catálogo](docs/screenshots/04-catalogo-filtros.jpg) |
 | **Detalhes do produto** | **Visualização rápida** |
 | ![Produto](docs/screenshots/05-detalhes-produto.jpg) | ![Visualização rápida](docs/screenshots/06-visualizacao-rapida.jpg) |
@@ -153,10 +156,10 @@ muken-store/
 │   ├── pages.js            # início, produto, sobre, contato, privacidade, 404
 │   └── app.js              # roteador, tema, cabeçalho, inicialização
 ├── assets/
-│   ├── images/             # ilustrações dos produtos e imagem de compartilhamento
+│   ├── images/             # produtos, íris do hero, estrelas e imagem de compartilhamento
 │   ├── icons/              # favicons e ícones de aplicativo
 │   ├── logo/               # logotipos (escuro, claro, símbolo)
-│   └── fonts/              # Inter e Unbounded (woff2)
+│   └── fonts/              # Inter, Archivo, JetBrains Mono e Noto Sans JP (woff2)
 ├── docs/
 │   ├── relatorio.md        # relatório técnico acadêmico
 │   ├── historico-prompts.md
@@ -250,23 +253,24 @@ O site é 100% estático, usa apenas caminhos relativos e um roteador por hash (
 - 🌐 **Loja publicada:** https://jpribeiro011.github.io/muken-store/
 - 📁 **Repositório:** https://github.com/JpRibeiro011/muken-store
 
-✅ **Publicação verificada:** a suíte de testes foi executada contra o próprio site publicado, com **47 de 47 testes aprovados**.
+✅ **Publicação verificada:** a suíte de testes foi executada contra o próprio site publicado, com **47 de 47 testes aprovados** na primeira versão e de novo depois do redesign (9 de novembro de 2026).
 
 ## Informações acadêmicas
 
 | | |
 | --- | --- |
-| **Aluno** | João Pedro Ribeiro |
-| **Instituição** | *[preencher]* |
-| **Curso / disciplina** | *[preencher]* |
-| **Professor(a)** | *[preencher]* |
+| **Autoria** | João Pedro Ribeiro |
+| **Instituição** | Centro Universitário de Brasília (CEUB) |
+| **Curso** | Engenharia de Software |
+| **Disciplina** | Desenvolvimento de Interfaces — Turma B (0726) · Asa Norte · Noturno |
+| **Docente** | Adriana |
+| **Entrega** | 25 de novembro de 2026 |
 | **Metodologia** | Vibe Coding (desenvolvimento assistido por IA) |
-| **Ano** | 2026 |
 
 O processo de desenvolvimento está documentado no [relatório técnico](docs/relatorio.md) e no [histórico de prompts](docs/historico-prompts.md).
 
 ---
 
 <div align="center">
-<sub>MUKEN STORE é uma marca conceitual criada para fins acadêmicos, sem vínculo com <i>Jujutsu Kaisen</i> ou seus detentores. As fontes Inter e Unbounded são distribuídas sob a SIL Open Font License.</sub>
+<sub>MUKEN STORE é uma marca conceitual criada para fins acadêmicos, sem vínculo com <i>Jujutsu Kaisen</i> ou seus detentores. As fontes Inter, Archivo, JetBrains Mono e Noto Sans JP são distribuídas sob a SIL Open Font License.</sub>
 </div>
