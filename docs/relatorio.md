@@ -10,7 +10,9 @@ Desenvolvimento de Interfaces — Turma B (0726) · Asa Norte · Noturno
 
 <br>
 
-**JOÃO PEDRO RIBEIRO**
+**ANA JULIA**<br>
+**JOÃO PEDRO RIBEIRO**<br>
+**MATHEUS LOPES SPINDOLA**
 
 <br>
 
@@ -309,7 +311,7 @@ As dificuldades abaixo ocorreram de fato durante o desenvolvimento e foram regis
     - O diagnóstico foi feito inspecionando o repositório remoto: o `index.html` estava em `muken-store/index.html`, e a loja funcionava em `/muken-store/muken-store/`.
     - Solução: com a permissão do aplicativo concedida e uma autorização explícita para substituir o conteúdo, ele foi substituído pelo histórico original com `git push --force-with-lease`, e o site entrou no ar cerca de 1,5 minuto depois.
     - Além disso, o domínio `github.io` estava bloqueado na rede do ambiente do agente. Foi criado um ambiente com acesso apenas a esse domínio (e à ViaCEP) para verificar o site publicado.
-    - A ViaCEP continuou encerrando as conexões vindas do ambiente na nuvem, por isso a consulta real de CEP não pôde ser testada pelo agente. Ela foi validada com respostas simuladas, e o checkout tem preenchimento manual como alternativa.
+    - A ViaCEP continuou encerrando as conexões vindas do ambiente na nuvem, por isso a consulta real de CEP não pôde ser testada pelo agente. Ela foi validada com respostas simuladas, e o checkout tem preenchimento manual como alternativa. Em 24 de novembro de 2026, com o acesso liberado, a consulta real foi testada no site publicado e preencheu o endereço corretamente.
 
 11. **Redesign da interface.** A troca de cores, fontes e layout trouxe problemas novos, todos encontrados pelos testes ou pela revisão visual (Apêndice A, registro 15):
     - **Contraste.** Com as novas cores, o teste de acessibilidade passou a falhar (46 de 47 aprovados): o separador 無限 com opacidade sobre a barra azul (3,61:1), o texto do bloco azul da página Sobre (4,01:1), os índices de seção no tema claro (4,44:1) e o vermelho de “Esgotado” no tema claro (4,42:1). Uma auditoria mais ampla achou ainda um selo de status âmbar na página de pedidos, no tema claro (4,18:1). As cores foram ajustadas até zerar as violações.
@@ -319,7 +321,7 @@ As dificuldades abaixo ocorreram de fato durante o desenvolvimento e foram regis
     - **Abertura via `file://`.** O pré-carregamento das fontes, adicionado para acelerar o hero, gerava erros de CORS no console ao abrir o `index.html` direto do disco. Ele passou a ser adicionado só quando o site roda em http(s).
     - **Verificação no ar.** Uma captura do site publicado em 1280 px, largura comum de notebook, mostrou o campo de busca do cabeçalho espremido (cerca de 60 px). As capturas anteriores eram em 1440 px e os testes rodam em 1366 px, por isso o problema não tinha aparecido. A causa era uma regra antiga que dava espaçamento lateral aos links do menu; ela foi removida e, abaixo de 1280 px, a busca passou a virar um ícone que abre a barra de pesquisa.
 
-**Do meu lado.** O que mais me travou não foi o código, foi o GitHub. Eu não sabia que o “Publish repository” do GitHub Desktop tenta criar um repositório novo, então acabei criando repositório repetido e depois subi os arquivos pelo site dentro de uma pasta a mais, o que deu 404. Também precisei aprender a revisar o que a IA entregava: a primeira versão funcionava, mas foi olhando com calma que eu percebi que o visual estava genérico e consegui explicar o que eu queria mudar.
+**Do lado da equipe.** O que mais nos travou não foi o código, foi o GitHub. A gente não sabia que o “Publish repository” do GitHub Desktop tenta criar um repositório novo, então acabamos criando repositório repetido e depois subimos os arquivos pelo site dentro de uma pasta a mais, o que deu 404. Também precisamos aprender a revisar o que a IA entregava: a primeira versão funcionava, mas foi olhando com calma que percebemos que o visual estava genérico e conseguimos explicar o que queríamos mudar.
 
 ## 12. Resultados obtidos
 
@@ -357,15 +359,15 @@ O projeto atingiu o objetivo de construir um e-commerce conceitual funcional, co
 
 Do ponto de vista do Vibe Coding, a experiência mostrou que a IA acelera muito a produção de código e de artefatos (ilustrações, documentação, testes), mas que **a qualidade depende do ciclo de validação**: vários problemas só apareceram ao executar a aplicação, medir o layout, auditar a acessibilidade e observar as capturas de tela. Especificar com clareza o que se quer, como foi feito no prompt mestre, e exigir verificação a cada etapa foram fatores decisivos para o resultado. O redesign reforçou outra lição: a IA entregou rápido uma interface correta, mas foi a avaliação crítica humana que percebeu que ela era genérica e definiu a direção para torná-la marcante.
 
-### Reflexão pessoal
+### Reflexão da equipe
 
-Quando eu comecei, achava que Vibe Coding era só pedir e receber o site pronto. Na prática não foi bem assim. Eu escrevi um prompt bem detalhado, com tudo o que a loja precisava ter, e isso ajudou muito, porque a IA conseguiu dividir o trabalho em etapas e ir testando cada parte. Mas eu continuei tendo que acompanhar, tomar decisões e, principalmente, olhar o resultado com senso crítico. Teve até momento em que a IA parou no meio do caminho: uma vez eu perguntei “por que parou?” e, no redesign, a sessão bateu o limite de uso e eu tive que mandar “continue” no dia seguinte.
+Quando começamos, achávamos que Vibe Coding era só pedir e receber o site pronto. Na prática não foi bem assim. Escrevemos um prompt bem detalhado, com tudo o que a loja precisava ter, e isso ajudou muito, porque a IA conseguiu dividir o trabalho em etapas e ir testando cada parte. Mas a gente continuou tendo que acompanhar, tomar decisões e, principalmente, olhar o resultado com senso crítico. Teve até momento em que a IA parou no meio do caminho: uma vez perguntamos “por que parou?” e, no redesign, a sessão bateu o limite de uso e tivemos que mandar “continue” no dia seguinte.
 
-O momento que mais me marcou foi quando a primeira versão ficou pronta e publicada. Tudo funcionava: carrinho, cupom, checkout, pedidos. Mesmo assim, olhando com calma, eu achei o visual genérico, com cara de template. Pedi para deixar mais profissional sem perder a referência ao Gojo, e aí veio a parte de que eu mais gostei: o olho no início do site, inspirado nos Seis Olhos, as seções numeradas e os detalhes em japonês. Isso me mostrou que a IA faz muita coisa rápido, mas quem decide se está bom é a gente.
+O momento que mais marcou foi quando a primeira versão ficou pronta e publicada. Tudo funcionava: carrinho, cupom, checkout, pedidos. Mesmo assim, olhando com calma, achamos o visual genérico, com cara de template. Pedimos para deixar mais profissional sem perder a referência ao Gojo, e aí veio a parte de que mais gostamos: o olho no início do site, inspirado nos Seis Olhos, as seções numeradas e os detalhes em japonês. Isso mostrou que a IA faz muita coisa rápido, mas quem decide se está bom é a gente.
 
-Também aprendi bastante coisa técnica no caminho: como o LocalStorage guarda os dados no próprio navegador, por que uma loja estática usa rotas com # para funcionar no GitHub Pages e que acessibilidade não é detalhe, já que os testes acharam problemas de contraste que passariam despercebidos só no olho. E o GitHub me deu trabalho: errei a publicação mais de uma vez, mas, entendendo o erro, ficou fácil de corrigir.
+Também aprendemos bastante coisa técnica no caminho: como o LocalStorage guarda os dados no próprio navegador, por que uma loja estática usa rotas com # para funcionar no GitHub Pages e que acessibilidade não é detalhe, já que os testes acharam problemas de contraste que passariam despercebidos só no olho. E o GitHub deu trabalho: erramos a publicação mais de uma vez, mas, entendendo o erro, ficou fácil de corrigir.
 
-Se eu fosse fazer de novo, daria mais atenção ao visual logo no começo, descrevendo no prompt o estilo que eu queria, com exemplos, e deixaria o GitHub configurado antes de começar, para não travar na hora de publicar. No geral, gostei muito do resultado: a loja funciona de verdade, tem uma identidade própria e eu entendi o porquê de cada parte.
+Se fôssemos fazer de novo, daríamos mais atenção ao visual logo no começo, descrevendo no prompt o estilo que queríamos, com exemplos, e deixaríamos o GitHub configurado antes de começar, para não travar na hora de publicar. No geral, gostamos muito do resultado: a loja funciona de verdade, tem uma identidade própria e entendemos o porquê de cada parte.
 
 ## 15. Referências
 
@@ -414,5 +416,6 @@ O histórico completo, com objetivo, prompt, resumo da resposta da IA, aplicaç�
 | 11 | Documentação e publicação | README, relatório, histórico, capturas |
 | 12 | “por que parou?” | Explicação da interrupção e retomada |
 | 13 | Publicação no GitHub Pages | Diagnóstico do 404 (arquivos em subpasta), substituição pelo histórico original, verificação do site no ar |
-| 14 | Dados do relatório | Explicação do que o relatório pede, capa preenchida, reflexão em primeira pessoa |
+| 14 | Dados do relatório | Explicação do que o relatório pede, capa preenchida, reflexão da equipe |
 | 15 | Redesign: “achei ele muito genérico” | Hero “Seis Olhos”, grade editorial, nova tipografia, promoção “Vazio Ilimitado”, correções de contraste e layout |
+| 16 | Entregáveis finais | Código em .zip, relatório no formato da disciplina (.docx e .pdf), apresentação e vídeo de demonstração; nomes da equipe |

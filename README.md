@@ -259,7 +259,7 @@ O site é 100% estático, usa apenas caminhos relativos e um roteador por hash (
 
 | | |
 | --- | --- |
-| **Autoria** | João Pedro Ribeiro |
+| **Equipe** | Ana Julia, João Pedro Ribeiro e Matheus Lopes Spindola |
 | **Instituição** | Centro Universitário de Brasília (CEUB) |
 | **Curso** | Engenharia de Software |
 | **Disciplina** | Desenvolvimento de Interfaces — Turma B (0726) · Asa Norte · Noturno |

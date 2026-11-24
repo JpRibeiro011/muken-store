@@ -2,7 +2,7 @@
 
 **Projeto:** MUKEN STORE — E-commerce conceitual
 **Ferramenta de IA:** Claude Code (agente de programação da Anthropic), executado em ambiente remoto na nuvem
-**Autoria:** João Pedro Ribeiro
+**Equipe:** Ana Julia, João Pedro Ribeiro e Matheus Lopes Spindola
 **Período:** novembro de 2026
 
 ---
@@ -13,7 +13,7 @@ O desenvolvimento seguiu um fluxo real de *Vibe Coding*: um **prompt mestre** (r
 
 Por isso, em cada registro abaixo, o campo **“Prompt completo”** reproduz o **trecho exato do prompt mestre** que orientou aquela etapa. Os campos “Resumo da resposta da IA”, “Aplicação prática” e “Adaptações realizadas” descrevem o que de fato foi produzido e as decisões e correções reais, que podem ser conferidas no código e no histórico de commits do repositório.
 
-Também estão registradas as interações adicionais reais que ocorreram durante o processo (registros 12 a 15). Prompts feitos depois desta versão devem ser acrescentados na seção [Prompts adicionais](#prompts-adicionais).
+Também estão registradas as interações adicionais reais que ocorreram durante o processo (registros 12 a 16). Prompts feitos depois desta versão devem ser acrescentados na seção [Prompts adicionais](#prompts-adicionais).
 
 | # | Etapa | Commit relacionado |
 | --- | --- | --- |
@@ -32,6 +32,7 @@ Também estão registradas as interações adicionais reais que ocorreram durant
 | 13 | Publicação no GitHub Pages | `Update documentation after deployment` |
 | 14 | Dados do relatório | `Update documentation after redesign` |
 | 15 | Redesign da interface | `Redesign interface with Six Eyes hero and editorial grid` |
+| 16 | Entregáveis finais | `Add team members to documentation` |
 
 ---
 
@@ -345,7 +346,7 @@ Data de entrega: 25/11/2026      as reflexões voce pode fazer do jeito que acha
 - Explicou que o relatório é o arquivo `docs/relatorio.md` (item 11 do enunciado), com as 16 seções exigidas já escritas, faltando só os campos que dependiam de informações pessoais.
 - Listou o que faltava (instituição, curso, disciplina, docente, cidade, data de entrega, reflexão pessoal e, opcionalmente, dificuldades próprias) e perguntou sobre as datas de acesso das referências e sobre algum modelo de documento da disciplina.
 - Com os dados recebidos, preencheu a capa do relatório e a tabela acadêmica do README.
-- Escreveu a reflexão pessoal (seção 14) e o parágrafo “Do meu lado” (seção 11) em primeira pessoa e em tom de conversa, como pedido, a partir de fatos reais do processo: a pergunta “por que parou?”, os erros de publicação, a crítica ao visual genérico e o redesign.
+- Escreveu a reflexão (seção 14) e o parágrafo sobre as dificuldades da equipe (seção 11) em primeira pessoa e em tom de conversa, como pedido, a partir de fatos reais do processo: a pergunta “por que parou?”, os erros de publicação, a crítica ao visual genérico e o redesign.
 - O pedido de redesign (registro 15) chegou logo em seguida e interrompeu esta etapa, que foi concluída junto com a documentação do redesign.
 
 **Aplicação prática:** `docs/relatorio.md` (capa, seções 11, 14 e 15) e `README.md` (informações acadêmicas); commit `Update documentation after redesign`.
@@ -385,6 +386,31 @@ Data de entrega: 25/11/2026      as reflexões voce pode fazer do jeito que acha
 - O olho é decorativo para leitores de tela, fica parado com “reduzir movimento” e pausa quando sai da tela.
 - O hero continua escuro no tema claro, porque a íris luminosa depende do contraste com o fundo.
 - A fonte japonesa só tem os caracteres usados; trocar ou acrescentar textos em japonês exige gerar o subconjunto de novo.
+
+---
+
+## 16. Entregáveis finais e nomes da equipe
+
+**Objetivo:** gerar os quatro entregáveis pedidos nas orientações da disciplina.
+
+**Prompts completos (sequência real de mensagens):**
+
+> preciso que me entregue tudo isso Entregáveis O aluno deverá entregar: 1. Código-fonte completo (.html, .css e .js). 2. Relatório do projeto, conforme orientação em anexo. 3. Apresentação demonstrando as funcionalidades. 4. Vídeo de demonstração. *(com o documento de orientações da disciplina em anexo)*
+
+> lembrando que tem que ter o meu nome e dos meus colegas, que são Matheus Lopes Spindola e Ana Julia
+
+**Resumo da resposta da IA:**
+- Leu o anexo e notou que ele descreve o projeto de referência CineMatch; perguntou para qual projeto preparar os entregáveis, e a resposta foi a MUKEN STORE.
+- Para a logomarca exigida na capa, com autorização, liberou na rede do ambiente só os domínios do CEUB e baixou o arquivo oficial da Central da Marca.
+- Gerou o código-fonte em .zip, o relatório no formato do anexo (.docx e .pdf, com tabela de correspondência entre os requisitos RF01–RF06 e a loja), a apresentação (.pptx e .pdf, com roteiro de fala nas anotações) e o vídeo de demonstração (.mp4, com legendas).
+- Testou de novo a consulta de CEP: com o acesso liberado, a ViaCEP real preencheu o endereço no site publicado.
+- Incluiu os três nomes em todos os entregáveis e na documentação e passou a reflexão para a voz da equipe.
+
+**Aplicação prática:** pacote de entrega e commit `Add team members to documentation`.
+
+**Adaptações realizadas:**
+- O relatório segue a estrutura e a numeração do anexo e foi condensado para ficar próximo do tamanho recomendado.
+- Os nomes foram escritos exatamente como informados.
 
 ---
 
